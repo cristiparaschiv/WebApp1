@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-type" content="text/html; charset=[% settings.charset %]" />
+<title>WebApp</title>
+<link rel="stylesheet" href="[% request.uri_base %]/css/style.css" />
+<link rel="stylesheet" href="[% request.uri_base %]/css/demo_table.css" />
+<link rel="stylesheet" href="[% request.uri_base %]/css/kendo.moonlight.min.css" />
+
+<script type="text/javascript" language="javascript" src="[% request.uri_base %]/javascripts/jquery.js"></script>
+<script type="text/javascript" language="javascript" src="[% request.uri_base %]/javascripts/jquery.dataTables.js"></script>
+<script type="text/javascript" language="javascript" src="[% request.uri_base %]/javascripts/kendo.web.min.js"></script>
+
+<script type="text/javascript">/* <![CDATA[ */
+    !window.jQuery && document.write('<script type="text/javascript" src="[% request.uri_base %]/javascripts/jquery.js"><\/script>')
+/* ]]> */</script>
+
+</head>
+<body>
+<div id="logo" style="background-color:#161712;height:120px ">LOGO WILL BE PLACED HERE</div>
+<div id="menu" style="background-color:#161712;height:40px">
+
+	<ul class="menu">
+		<li class="menu"><a class="menu" href="/">Home</a></li>
+		<li class="menu"><a class="menu" href="/artist/view">Browse Artists</a></li>
+		<li class="menu"><a class="menu" href="/contact">Contact</a></li>
+		<li class="menu"><a class="menu	" href="/logout">Log out</a></li>
+		<li class="menu"><a class="menu	" href="/admin">Admin</a></li>
+	</ul>
+
+</div>
+<div id="page">
+	[% content %]
+</div>
+<div id="footer">
+	Powered by <a href="http://perldancer.org/">Dancer</a> [% dancer_version %]
+
+</div>
+</body>
+</html>

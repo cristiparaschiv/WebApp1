@@ -1,0 +1,25 @@
+<h2 id="artist_name">Browse Artists</h2>
+<br><br>
+<table id="artists" cellpadding="0" cellspacing="0" border="0" class="display" width="100%">
+	<thead>
+		<tr>
+			<th>Artists</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+	[% FOREACH row IN result %]
+		<tr>
+			<td>[% row.name %]</td>
+			<td><a href="/artist/view/[% row.id %]">View</a></td>
+		</tr>
+	[% END %]
+	</tbody>
+</table>
+
+<script>
+	$(document).ready(function() {
+		//$('#artists').dataTable();
+		$('#artists').kendoGrid();
+	} );
+</script>
