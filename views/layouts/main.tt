@@ -6,7 +6,7 @@
 <title>WebApp</title>
 <link rel="stylesheet" href="[% request.uri_base %]/css/style.css" />
 <link rel="stylesheet" href="[% request.uri_base %]/css/demo_table.css" />
-<link rel="stylesheet" href="[% request.uri_base %]/css/kendo.moonlight.min.css" />
+<link rel="stylesheet" href="[% request.uri_base %]/css/kendo.black.min.css" />
 
 <script type="text/javascript" language="javascript" src="[% request.uri_base %]/javascripts/jquery.js"></script>
 <script type="text/javascript" language="javascript" src="[% request.uri_base %]/javascripts/jquery.dataTables.js"></script>
@@ -18,7 +18,7 @@
 
 </head>
 <body>
-<div id="logo" style="background-color:#161712;height:120px ">LOGO WILL BE PLACED HERE</div>
+<div id="logo" style="background-color:#161712;height:120px "><span>LOGO WILL BE PLACED HERE</span></div>
 <div id="menu" style="background-color:#161712;height:40px">
 
 	<ul class="menu">

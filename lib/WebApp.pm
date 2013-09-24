@@ -2,6 +2,9 @@ package WebApp;
 use Dancer ':syntax';
 use Dancer::Plugin::SimpleCRUD;
 use Dancer::Plugin::Database;
+use WebApp::UI::Grid;
+use WebApp::Datasource;
+use JSON;
 
 
 simple_crud(
@@ -55,12 +58,12 @@ get '/' => sub {
     template 'index';
 };
 
-hook 'before' => sub {
-	if (! session('user') && request->path_info !~ m{^/login}) {
-		var requested_path => request->path_info;
-		request->path_info('/login');
-	}
-};
+# hook 'before' => sub {
+	# if (! session('user') && request->path_info !~ m{^/login}) {
+		# var requested_path => request->path_info;
+		# request->path_info('/login');
+	# }
+# };
 
 get '/login' => sub {
 	template 'login', { path => vars->{requested_path} }, { layout=> undef };
@@ -101,7 +104,7 @@ get '/artist/view' => sub {
 	);
 	$sth->execute();
 	
-	my $result;
+	#my $result;
 	my $set = {};
 	#while (%{$result} = $sth->fetchrow_hashref) {
 		#$set->{$result->{id}} = {
@@ -111,8 +114,44 @@ get '/artist/view' => sub {
 		#};
 	#}
 	my @result = database->quick_select('artists', {});
-	use Data::Dumper; debug Dumper @result;
-	template 'browse_artists', {result => \@result};
+	use Data::Dumper;
+	#debug Dumper @result;
+	
+	my $hash = {
+		1 => {
+			name => 'test',
+			age => 12
+		},
+		2 => {
+			name => 'qwerty',
+			age => 22
+		}
+	};
+	
+	my $columns = [
+		{
+			field => 'name',
+			title => 'Artist',
+			width => '120%',
+		}
+	];
+	
+	my $command = {
+		command => ['view'],
+		title => '',
+		width => 350
+	};
+	push @$columns, $command;
+	
+	my $ds = WebApp::Datasource->init(\@result);
+	#debug Dumper $ds;
+	
+	my $grid = {
+		datasource => $ds,
+		columns => to_json($columns),
+	};
+	
+	template 'browse_artists', {result => \@result, grid => $grid};
 };
 
 true;

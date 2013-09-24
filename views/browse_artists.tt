@@ -1,25 +1,33 @@
 <h2 id="artist_name">Browse Artists</h2>
 <br><br>
-<table id="artists" cellpadding="0" cellspacing="0" border="0" class="display" width="100%">
-	<thead>
-		<tr>
-			<th>Artists</th>
-			<th></th>
-		</tr>
-	</thead>
-	<tbody>
-	[% FOREACH row IN result %]
-		<tr>
-			<td>[% row.name %]</td>
-			<td><a href="/artist/view/[% row.id %]">View</a></td>
-		</tr>
-	[% END %]
-	</tbody>
-</table>
+
+<div id="grid" style="width:700px;margin-left:auto;margin-right:auto"></div>
 
 <script>
 	$(document).ready(function() {
 		//$('#artists').dataTable();
-		$('#artists').kendoGrid();
+		//$('#artists').kendoGrid();
+		
+		var dataSource = [% grid.datasource %],
+				columns = [% grid.columns %];
+	//console.log(dataSource);
+	//console.log(columns);	
+		$('#grid').kendoGrid({
+				dataSource: dataSource,
+				columns: columns,
+				selectable: true,
+		});
+		
+		//console.log([% ds %]);
+		
+		$(document).on('click', '.k-grid-view', function(e) {
+				e.preventDefault();
+				var grid = $('#grid').data('kendoGrid');
+				var selectedRow = grid.select();
+				var dataItem = grid.dataItem(selectedRow);
+				var id = dataItem.id;
+				
+				$(location).attr('href', '/artist/view/' + id);
+		});
 	} );
 </script>
