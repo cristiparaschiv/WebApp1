@@ -65,26 +65,29 @@ sub get_columns {
 sub get_metadata {
     my $self = shift;
     my $model = shift;
+    my $values = shift;
     
     if ($model eq 'artist') {
-        return artist_metadata();
+        return artist_metadata($values);
     } elsif ($model eq 'album') {
-        return album_metadata();
+        return album_metadata($values);
     } elsif ($model eq 'track') {
-        return track_metadata();
+        return track_metadata($values);
     } elsif ($model eq 'genre') {
-        return genre_metadata();
+        return genre_metadata($values);
     }
     
 }
 
 sub artist_metadata {
+    my $values = shift;
     my $metadata = [
         {
                 name => 'name',
                 display => 'Artist',
                 type => 'string',
                 options => {},
+                value => $values->{name} // '',
                 model => 'artist'
         },
         {
@@ -92,6 +95,7 @@ sub artist_metadata {
                 display => 'Biography',
                 type => 'text',
                 options => {},
+                value => $values->{description} // '',
                 model => 'artist'
         },
         {
@@ -99,26 +103,30 @@ sub artist_metadata {
                 display => 'Picture',
                 type => 'string',
                 model => 'artist',
-                options => {}
+                options => {},
+                value => $values->{picture} // '',
         },
         {
                 name => 'country',
                 display => 'Country',
                 type => 'string',
                 model => 'artist',
-                options => {}
+                options => {},
+                value => $values->{country} // '',
         }
     ];
     return $metadata;
 }
 
 sub album_metadata {
+    my $values = shift;
     my $metadata = [
         {
             name => 'artistid',
             display => 'Artist',
             type => 'select',
-            options => get_option_hash('artist'),
+            options => get_option_hash('artist'),,
+            value => $values->{artistid},
             model => 'album'
         },
         {
@@ -126,6 +134,7 @@ sub album_metadata {
             display => 'Name',
             type => 'string',
             options => {},
+            value => $values->{name},
             model => 'album',
         },
         {
@@ -133,6 +142,7 @@ sub album_metadata {
             display => 'Release Date',
             type => 'string',
             options => {},
+            value => $values->{release_date},
             model => 'album'
         },
         {
@@ -140,6 +150,7 @@ sub album_metadata {
             display => 'Genre',
             type => 'select',
             options => get_option_hash('genre'),
+            value => $values->{genreid},
             model => 'album'
         }
     ];
@@ -147,12 +158,14 @@ sub album_metadata {
 }
 
 sub track_metadata {
+    my $values = shift;
     my $metadata = [
         {
             name => 'albumid',
             display => 'Album',
             type => 'select',
             options => get_option_hash('album'),
+            value => $values->{albumid},
             model => 'track'
         },
         {
@@ -160,6 +173,7 @@ sub track_metadata {
             display => 'Track Name',
             type =>'string',
             options => {},
+            value => $values->{name},
             model => 'track'
         }
     ];
@@ -167,12 +181,14 @@ sub track_metadata {
 }
 
 sub genre_metadata {
+    my $values = shift;
     my $metadata = [
         {
             name => 'name',
             display => 'Genre',
             type => 'string',
             options => {},
+            value => $values->{name},
             model => 'genre',
         },
         {
@@ -180,6 +196,7 @@ sub genre_metadata {
             display => 'Description',
             type => 'text',
             options => {},
+            value => $values->{description},
             model => 'genre'
         }
     ];

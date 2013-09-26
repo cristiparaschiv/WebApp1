@@ -64,7 +64,7 @@ sub handle_genre {
 sub submit {
 	my $model = shift;
 	my $params = shift;
-	
+
 	my $object = {};
 	my $metadata = WebApp::Helper->get_metadata($model);
 	
@@ -72,8 +72,14 @@ sub submit {
 		$object->{$field->{name}} = $params->{"$model.$field->{name}"};
 	}
 	
-	debug '[Controller] Saving Artist object to database: ' . to_dumper($object);
-	database->quick_insert($model . 's', $object);
+	if (defined $params->{id} and $params->{id} ne '') {
+		debug '[Controller] Updating ' . uc($model) . ' object to database: ' . to_dumper($object);
+		database->quick_update($model . 's', { id => $params->{id} }, $object);
+	} else {
+		debug '[Controller] Saving ' . uc($model) . ' object to database: ' . to_dumper($object);
+		database->quick_insert($model . 's', $object);
+	}
+	
 	redirect '/' . $model . '/view';
 }
 
@@ -84,6 +90,17 @@ sub add {
 	my $form = new WebApp::UI::Form($model, $metadata, '/' . $model . '/add');
         
     template 'add', {form => $form};
+}
+
+sub edit {
+	my $id = shift;
+	my $model = shift;
+	
+	my $record = database->quick_select($model . 's', { id => $id });
+	my $metadata = WebApp::Helper->get_metadata($model, $record);
+	my $form = new WebApp::UI::Form($model, $metadata, '/' . $model . '/add?id=' . $id);
+
+	template 'add', {form => $form};
 }
 
 sub list_model {
@@ -124,6 +141,8 @@ sub handle_artist_id {
 
 	if ($action eq 'view') {
 		artist_view_details($id);
+	} elsif ($action eq 'edit') {
+		edit($id, 'artist');
 	}
 	
 }
@@ -134,6 +153,8 @@ sub handle_album_id {
 	
 	if ($action eq 'view') {
 		album_view_details($id);
+	} elsif ($action eq 'edit') {
+		edit($id, 'album');
 	}
 	
 }
@@ -144,6 +165,8 @@ sub handle_track_id {
 	
 	if ($action eq 'view') {
 		track_view_details($id);
+	} elsif ($action eq 'edit') {
+		edit($id, 'track');
 	}
 	
 }
@@ -154,6 +177,8 @@ sub handle_genre_id {
 	
 	if ($action eq 'view') {
 		genre_view_details($id);
+	} elsif ($action eq 'edit') {
+		edit($id, 'genre');
 	}
 	
 }
