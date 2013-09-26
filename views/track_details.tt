@@ -1,0 +1,5 @@
+<h2>[% data.name %]</h2>
+
+<div id="track_content">
+    [% data.album %]
+</div>

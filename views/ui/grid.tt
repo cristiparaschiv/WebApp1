@@ -1,1 +1,51 @@
-temp
+<div class="grid-holder">
+		<div id="grid_filter">
+				<label for="filter">Filter:</label>
+				<input type=text name=filter id="filter-grid">
+		</div>
+		<div id="[% grid.dom_id %]"></div>
+</div>
+<script>
+		$(document).ready(function() {
+		var dataSource = [% grid.datasource %],
+			columns = [% grid.columns %],
+			domId = [% grid.dom_id %],
+			selectable = [% grid.selectable %],
+			sortable = [% grid.sortable %];		
+				$('.grid-holder').css("width", "[% grid.width %]");
+
+		$('#[% grid.dom_id %]').kendoGrid({
+			dataSource: dataSource,
+			columns: columns,
+			selectable: selectable,
+			sortable: sortable		});
+		
+		$('#filter-grid').keyup(function(e) {
+		    var filterValue = $('#filter-grid').val()
+			    filters = [],
+				grid = $('#[% grid.dom_id %]').data('kendoGrid'),
+				columns = grid.columns;
+				
+		    for(var i=0; i<columns.length-1; i++) {
+				filters.push({
+				    field: columns[i].field,
+					operator: 'contains',
+					value: filterValue.toLowerCase()
+				});
+				filters.push({
+				    field: columns[i].field,
+					operator: 'contains',
+					value: filterValue.toUpperCase()
+				});
+			}
+			
+			grid.dataSource.filter({
+				logic: 'or',
+				filters: filters
+			});
+		    
+			
+		    
+			
+		});	});
+</script>

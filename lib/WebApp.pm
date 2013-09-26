@@ -4,51 +4,9 @@ use Dancer::Plugin::SimpleCRUD;
 use Dancer::Plugin::Database;
 use WebApp::UI::Grid;
 use WebApp::Datasource;
+use WebApp::UI::Form;
 use JSON;
-
-
-simple_crud(
-	record_title => 'Genre',
-	db_table => 'genres',
-	prefix => '/genre',
-	deletable => 'yes',
-	sortable => 'yes',
-	paginate => 5
-);
-
-simple_crud(
-	record_title => 'Artist',
-	db_table => 'artists',
-	prefix => '/artist',
-	deletable => 'yes',
-	sortable => 'yes',
-	paginable => 5
-);
-
-simple_crud(
-	record_title => 'Albums',
-	db_table => 'albums',
-	prefix => '/album',
-	deletable => 'yes',
-	sortable => 'yes',
-	paginable => 5,
-	foreign_keys => {
-		columnname => {
-			table => 'artists',
-			key_column => 'id',
-			label_column => 'artistid',
-		}
-	}
-);
-
-simple_crud(
-	record_title => 'Tracks',
-	db_table => 'tracks',
-	prefix => '/track',
-	deletable => 'yes',
-	sortable => 'yes',
-	paginable => 5
-);
+use WebApp::Controller;
 
 set template => 'template_toolkit';
 
@@ -88,70 +46,64 @@ get '/admin' => sub {
 		template 'admin'
 };
 
-get '/artist/view/:id' => sub {
-	my $sth = database->prepare(
-		'select * from artists where id = ?',
-	);
-	$sth->execute(params->{id});
-	my $result = $sth->fetchrow_hashref;
-	use Data::Dumper; debug Dumper $result;
-	template 'artists', {name => $result->{name}, description => $result->{description} };
+get '/artist/:action/:id' => sub {
+        my $action = params->{action};
+        my $id = params->{id};
+        
+        return WebApp::Controller::handle_artist_id($action, $id);
 };
 
-get '/artist/view' => sub {
-	my $sth = database->prepare(
-		'select * from artists',
-	);
-	$sth->execute();
+get '/album/:action/:id' => sub {
+		my $action = params->{action};
+		my $id = params->{id};
+		
+		return WebApp::Controller::handle_album_id($action, $id);
+};
+
+get '/track/:action/:id' => sub {
+	my $action = params->{action};
+	my $id = params->{id};
 	
-	#my $result;
-	my $set = {};
-	#while (%{$result} = $sth->fetchrow_hashref) {
-		#$set->{$result->{id}} = {
-			#name => $result->{name},
-			#description => $result->{description},
-			#id => $result->{id}
-		#};
-	#}
-	my @result = database->quick_select('artists', {});
-	use Data::Dumper;
-	#debug Dumper @result;
+	return WebApp::Controller::handle_track_id($action, $id);
+};
+
+get '/genre/:action/:id' => sub {
+	my $action = params->{action};
+	my $id = params->{id};
 	
-	my $hash = {
-		1 => {
-			name => 'test',
-			age => 12
-		},
-		2 => {
-			name => 'qwerty',
-			age => 22
-		}
-	};
+	return WebApp::Controller::handle_genre_id($action, $id);
+};
+
+any ['get', 'post'] => '/artist/:action' => sub {
+	my $action = params->{action};
+	my $params = {};
+	$params = params;
 	
-	my $columns = [
-		{
-			field => 'name',
-			title => 'Artist',
-			width => '120%',
-		}
-	];
+	return WebApp::Controller::handle_artist(request->{method}, $action, $params);
+};
+
+any ['get', 'post'] =>  '/album/:action' => sub {
+	my $action = params->{action};
+	my $params = {};
+	$params = params;
 	
-	my $command = {
-		command => ['view'],
-		title => '',
-		width => 350
-	};
-	push @$columns, $command;
+	return WebApp::Controller::handle_album(request->{method}, $action, $params);
+};
+
+any ['get', 'post'] => '/track/:action' => sub {
+	my $action = params->{action};
+	my $params = {};
+	$params = params;
 	
-	my $ds = WebApp::Datasource->init(\@result);
-	#debug Dumper $ds;
+	return WebApp::Controller::handle_track(request->{method}, $action, $params);
+};
+
+any ['get', 'post'] => '/genre/:action' => sub {
+	my $action = params->{action};
+	my $params = {};
+	$params = params;
 	
-	my $grid = {
-		datasource => $ds,
-		columns => to_json($columns),
-	};
-	
-	template 'browse_artists', {result => \@result, grid => $grid};
+	return WebApp::Controller::handle_genre(request->{method}, $action, $params);
 };
 
 true;

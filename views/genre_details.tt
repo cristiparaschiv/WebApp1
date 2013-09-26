@@ -1,0 +1,5 @@
+<h2>[% data.name %]</h2>
+
+<div id="genre_content">
+    [% data.description %]
+</div>

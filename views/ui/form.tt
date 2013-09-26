@@ -1,0 +1,11 @@
+<h2>Configuring Artist</h2>
+
+<div class="form-holder">
+    <form class="n-form" method="POST" action=[% action %]>
+        [% FOREACH field IN form_data.fields %]
+            [% field %]
+        [% END %]
+        <br>
+        <button type="submit" class="btn">Submit</button>
+    </form>
+</div>

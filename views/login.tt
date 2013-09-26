@@ -1,17 +1,18 @@
 <link rel="stylesheet" href="[% request.uri_base %]/css/style.css" />
-<h2>Login</h2>
+<div id="login-container">
+	<div id="login-welcome"></div>
+	<h2>Login</h2>
 
-<form action="[% login_url %]" method=post class=login>
-<p>
-	<label for=username>Username:</label>
-	<input type=text name=username>
-</p>
-<p>
-	<label for=password>Password:</label>
-	<input type=password name=password>
-	<input type=hidden name=path value="[% path %]">
-</p>
-<p class=login-submit>
-	<button type=submit class=login-button>Login</button>
-</p>
-</form>
+	<form action="[% login_url %]" method=post class=login>
+		<p>
+			<label for=username>Username:</label>
+			<input type=text name=username>		</p>
+		<p>
+			<label for=password>Password:</label>
+			<input type=password name=password>
+			<input type=hidden name=path value="[% path %]">
+		</p>
+		<p class=login-submit>
+			<button type=submit class=btn>Login</button>
+		</p>
+		</form></div>

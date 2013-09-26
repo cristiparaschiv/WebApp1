@@ -1,0 +1,7 @@
+<h2>[% data.name %] - [% data.artist %]</h2>
+
+<div id="album_content">
+    [% data.release_date %]
+    
+    [% data.genre %]
+</div>

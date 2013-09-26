@@ -1,0 +1,19 @@
+<div class="field-holder">
+    <label for=[% field.model %].[% field.name %]>
+        [% field.display %]:
+    </label>
+    [% IF field.type == 'string' || field.type == 'number' %]
+        <input name="[% field.model %].[% field.name %]" class="n-input" type="text">
+        <span></span>
+    [% ELSIF field.type == 'text' %]
+        <textarea name="[% field.model %].[% field.name %]" class="n-input"></textarea>
+        <span></span>
+    [% ELSIF field.type == 'select' %]
+        <select name="[% field.model %].[% field.name %]" class="n-input">
+            [% FOREACH option IN field.options %]
+                <option value="[% option.key %]">[% option.value %]</option>
+            [% END %]
+        </select>
+        <span></span>
+    [% END %]
+</div>

@@ -1,0 +1,72 @@
+.n-megamenu {
+    height: 30px;
+    margin: 0 auto;
+    position: relative;
+    padding: 0;
+}
+
+.n-megamenu > li {
+    color: #FFFFFF;
+    cursor: pointer;
+    display: block;
+    float: left;
+    font-size: 14px;
+    font-weight: bold;
+    height: 100%;
+    line-height: 30px;
+    list-style: none outside none;
+    margin: 0;
+    position: relative;
+    text-align: center;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.n-megamenu > li:first-of-type:hover {
+  border-radius: 5px 0px 0px 0px;
+}
+
+.n-megamenu > li:hover {
+  background-color: #F26324;
+}
+
+.n-megamenu > li > span {
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.n-megamenu li a {
+    color: #FFFFFF;
+    margin: 0 17px 0 10px;
+    padding: 5px;
+    text-decoration: none;
+}
+
+.n-megamenu li:hover > a {
+    text-decoration: none;
+}
+
+.n-megamenu li a:hover {
+    background-color: #F26324;
+}
+
+.n-megamenu div ul li a {
+  color: #0079c1;
+  cursor: pointer;
+}
+
+.n-megamenu a:active, .n-megamenu a:focus {
+outline-style:none;
+}
+
+.n-megamenu-action.n-megamenu-tab {
+    float: right;
+    position: absolute;
+    right: 0;
+}
+
+.n-megamenu-action.n-megamenu-tab:hover {
+  border-radius: 0px 5px 0px 0px;
+}

@@ -1,0 +1,19 @@
+
+<div id="artists-grid-holder">
+    [% test %]
+</div>
+
+<script>
+    $(document).ready(function() {
+        $(document).on('click', '.k-grid-view', function(e) {
+				e.preventDefault();
+				var grid = $('#artistsGrid').data('kendoGrid'),
+                    selectedRow = grid.select(),
+                    dataItem = grid.dataItem(selectedRow),
+                    id = dataItem.id;
+
+				//$(location).attr('href', '/artist/view/' + id);
+                $(location).attr('href', '/artist/view/1');
+		});
+    });
+</script>

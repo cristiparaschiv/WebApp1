@@ -1,0 +1,42 @@
+simple_crud(
+	record_title => 'Genre',
+	db_table => 'genres',
+	prefix => '/genre',
+	deletable => 'yes',
+	sortable => 'yes',
+	paginate => 5
+);
+
+simple_crud(
+	record_title => 'Artist',
+	db_table => 'artists',
+	prefix => '/artist',
+	deletable => 'yes',
+	sortable => 'yes',
+	paginable => 5
+);
+
+simple_crud(
+	record_title => 'Albums',
+	db_table => 'albums',
+	prefix => '/album',
+	deletable => 'yes',
+	sortable => 'yes',
+	paginable => 5,
+	foreign_keys => {
+		columnname => {
+			table => 'artists',
+			key_column => 'id',
+			label_column => 'artistid',
+		}
+	}
+);
+
+simple_crud(
+	record_title => 'Tracks',
+	db_table => 'tracks',
+	prefix => '/track',
+	deletable => 'yes',
+	sortable => 'yes',
+	paginable => 5
+);

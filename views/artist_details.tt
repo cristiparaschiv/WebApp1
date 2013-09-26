@@ -1,0 +1,6 @@
+<h2>[% data.name %]</h2>
+
+<div id="artist_content">
+    <img id="artist_picture" src="[% request.uri_base %]/images/artists/[% data.picture %]">
+    [% data.bio %]
+</div>

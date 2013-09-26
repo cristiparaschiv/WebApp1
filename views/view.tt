@@ -1,0 +1,19 @@
+
+<div id="view-grid-holder">
+    [% test %]
+</div>
+
+<script>
+    $(document).ready(function() {
+        $(document).on('click', '.k-grid-view', function(e) {
+				e.preventDefault();
+				var grid = $('#[% model %]Grid').data('kendoGrid'),
+                    selectedRow = grid.select(),
+                    dataItem = grid.dataItem(selectedRow),
+                    id = dataItem.id,
+                    urlModel = '[% model %]'.substring(0, '[% model %]'.length - 1);
+
+				$(location).attr('href', '/' + urlModel + '/view/' + id);
+		});
+    });
+</script>

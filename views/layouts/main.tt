@@ -5,11 +5,13 @@
 <meta http-equiv="Content-type" content="text/html; charset=[% settings.charset %]" />
 <title>WebApp</title>
 <link rel="stylesheet" href="[% request.uri_base %]/css/style.css" />
-<link rel="stylesheet" href="[% request.uri_base %]/css/demo_table.css" />
-<link rel="stylesheet" href="[% request.uri_base %]/css/kendo.black.min.css" />
+<link rel="stylesheet" href="[% request.uri_base %]/css/kendo.default.min.css" />
+<link rel="stylesheet" href="[% request.uri_base %]/css/menu.css" />
+
+<!-- Grab Google CDN's jQuery. fall back to local if necessary -->
 
 <script type="text/javascript" language="javascript" src="[% request.uri_base %]/javascripts/jquery.js"></script>
-<script type="text/javascript" language="javascript" src="[% request.uri_base %]/javascripts/jquery.dataTables.js"></script>
+<script type="text/javascript" language="javascript" src="[% request.uri_base %]/javascripts/jquery.min.js"></script>
 <script type="text/javascript" language="javascript" src="[% request.uri_base %]/javascripts/kendo.web.min.js"></script>
 
 <script type="text/javascript">/* <![CDATA[ */
@@ -18,24 +20,43 @@
 
 </head>
 <body>
-<div id="logo" style="background-color:#161712;height:120px "><span>LOGO WILL BE PLACED HERE</span></div>
-<div id="menu" style="background-color:#161712;height:40px">
-
-	<ul class="menu">
-		<li class="menu"><a class="menu" href="/">Home</a></li>
-		<li class="menu"><a class="menu" href="/artist/view">Browse Artists</a></li>
-		<li class="menu"><a class="menu" href="/contact">Contact</a></li>
-		<li class="menu"><a class="menu	" href="/logout">Log out</a></li>
-		<li class="menu"><a class="menu	" href="/admin">Admin</a></li>
-	</ul>
-
-</div>
-<div id="page">
-	[% content %]
-</div>
+    <div id="container">
+        <div id="logo">LOGO HERE</div>
+        <div id="menu">
+            
+            <ul id="menuHolder" class="n-megamenu" style="width:100%">
+                <li class="n-megamenu-tab">
+                    <span>
+                        <a href="/">Home</a>
+                    </span>
+                </li>
+                <li class="n-megamenu-tab">
+                    <span>
+                        <a href="/artist/view">Browse Artists</a>
+                    </span>
+                </li>
+                <li class="n-megamenu-tab">
+                    <span>
+                        <a href="/contact">Contact</a>
+                    </span>
+                </li>
+                <li class="n-megamenu-action n-megamenu-tab">
+                    <span>
+                        <a href="/logout">Log out</a>
+                    </span>
+                </li>
+            </ul>
+    
+            
+        </div>
+        <div class="wrapper">
+            
+            [% content %]
+    
+        </div>
+    </div>
 <div id="footer">
-	Powered by <a href="http://perldancer.org/">Dancer</a> [% dancer_version %]
-
+Powered by <a href="http://perldancer.org/">Dancer</a> [% dancer_version %]
 </div>
 </body>
 </html>
