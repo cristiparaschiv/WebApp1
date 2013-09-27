@@ -8,7 +8,7 @@ sub new {
     my $model = shift;
     my $metadata = shift;
     my $action = shift;
-    
+
     my $fields = [];
     
     foreach my $field_data (@$metadata) {

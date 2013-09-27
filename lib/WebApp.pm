@@ -106,4 +106,13 @@ any ['get', 'post'] => '/genre/:action' => sub {
 	return WebApp::Controller::handle_genre(request->{method}, $action, $params);
 };
 
+get '/test' => sub {
+	use WebApp::Model;
+	
+	my $meta = WebApp::Model::Artist->get_option_hash();
+	debug to_dumper $meta;
+	
+	return 1;
+};
+
 true;

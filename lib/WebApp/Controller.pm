@@ -11,12 +11,12 @@ sub handle_artist {
 	my $params = shift;
 
 	if ($action eq 'view') {
-		list_model('artists'); #done
+		list_model('artist'); #done
 	} elsif ($action eq 'add' and $method eq 'GET') {
 		add('artist'); #done
 	} elsif ($action eq 'add' and $method eq 'POST') {
 		submit('artist', $params); #done
-	}	
+	}
 }
 
 sub handle_album {
@@ -25,7 +25,7 @@ sub handle_album {
 	my $params = shift;
 	
 	if ($action eq 'view') {
-		list_model('albums');#done
+		list_model('album');#done
 	} elsif ($action eq 'add' and $method eq 'GET') {
 		add('album');#done
 	} elsif ($action eq 'add' and $method eq 'POST') {
@@ -39,7 +39,7 @@ sub handle_track {
 	my $params = shift;
 	
 	if ($action eq 'view') {
-		list_model('tracks');#done
+		list_model('track');#done
 	} elsif ($action eq 'add' and $method eq 'GET') {
 		add('track');#done
 	} elsif ($action eq 'add' and $method eq 'POST') {
@@ -53,7 +53,7 @@ sub handle_genre {
 	my $params = shift;
 	
 	if ($action eq 'view') {
-		list_model('genres');#done
+		list_model('genre');#done
 	} elsif ($action eq 'add' and $method eq 'GET') {
 		add('genre');#done
 	} elsif ($action eq 'add' and $method eq 'POST') {
@@ -66,28 +66,28 @@ sub submit {
 	my $params = shift;
 
 	my $object = {};
-	my $metadata = WebApp::Helper->get_metadata($model);
+	my $lib = 'WebApp::Model::' . ucfirst($model);
+	my $metadata = $lib->_metadata();
 	
 	foreach my $field (@$metadata) {
 		$object->{$field->{name}} = $params->{"$model.$field->{name}"};
 	}
 	
 	if (defined $params->{id} and $params->{id} ne '') {
-		debug '[Controller] Updating ' . uc($model) . ' object to database: ' . to_dumper($object);
-		database->quick_update($model . 's', { id => $params->{id} }, $object);
+		$lib->_update($object, $params->{id});
 	} else {
-		debug '[Controller] Saving ' . uc($model) . ' object to database: ' . to_dumper($object);
-		database->quick_insert($model . 's', $object);
-	}
-	
+		$lib->_add($object);
+	}	
 	redirect '/' . $model . '/view';
 }
 
 sub add {
 	my $model = shift;
-	
-	my $metadata = WebApp::Helper->get_metadata($model);
-	my $form = new WebApp::UI::Form($model, $metadata, '/' . $model . '/add');
+
+	my $lib = 'WebApp::Model::' . ucfirst($model);
+	my $action = '/' . $model . '/add';
+	my $metadata = $lib->_metadata();	
+	my $form = new WebApp::UI::Form($model, $metadata, $action);
         
     template 'add', {form => $form};
 }
@@ -96,20 +96,33 @@ sub edit {
 	my $id = shift;
 	my $model = shift;
 	
-	my $record = database->quick_select($model . 's', { id => $id });
-	my $metadata = WebApp::Helper->get_metadata($model, $record);
-	my $form = new WebApp::UI::Form($model, $metadata, '/' . $model . '/add?id=' . $id);
+	my $lib = 'WebApp::Model::' . ucfirst($model);
+	my $action = '/' . $model . '/add?id=' . $id;
+	my $instance = $lib->_get($id);
+	my $metadata = $lib->_metadata($instance->{values});
+	my $form = new WebApp::UI::Form($model, $metadata, $action);
 
 	template 'add', {form => $form};
 }
 
-sub list_model {
+sub delete {
+	my $id = shift;
 	my $model = shift;
 	
-	my @records = database->quick_select($model, {});
+	my $lib = 'WebApp::Model::' . ucfirst($model);
+	$lib->_delete($id);
+	
+	redirect '/' . $model . '/view';
+}
+
+sub list_model {
+	my $model = shift;
+	my $lib = 'WebApp::Model::' . ucfirst($model);
+	
+	my $records = $lib->_get_all();
 	my $ds = [];
 	
-	foreach my $record (@records) {
+	foreach my $record (@$records) {
 		push @$ds, {
 			id => $record->{id},
 			name => $record->{name},
@@ -143,8 +156,9 @@ sub handle_artist_id {
 		artist_view_details($id);
 	} elsif ($action eq 'edit') {
 		edit($id, 'artist');
+	} elsif ($action eq 'delete') {
+		&delete($id, 'artist');
 	}
-	
 }
 
 sub handle_album_id {
@@ -155,8 +169,9 @@ sub handle_album_id {
 		album_view_details($id);
 	} elsif ($action eq 'edit') {
 		edit($id, 'album');
+	} elsif ($action eq 'delete') {
+		&delete ($id, 'album');
 	}
-	
 }
 
 sub handle_track_id {
@@ -167,8 +182,9 @@ sub handle_track_id {
 		track_view_details($id);
 	} elsif ($action eq 'edit') {
 		edit($id, 'track');
+	} elsif ($action eq 'delete') {
+		&delete($id, 'track');
 	}
-	
 }
 
 sub handle_genre_id {
@@ -179,17 +195,19 @@ sub handle_genre_id {
 		genre_view_details($id);
 	} elsif ($action eq 'edit') {
 		edit($id, 'genre');
+	} elsif ($action eq 'delete') {
+		&delete($id, 'genre');
 	}
-	
 }
 
 sub artist_view_details {
 	my $id = shift;
-	my $record = database->quick_select('artists', { id => $id });
+	my $instance = WebApp::Model::Artist->_get($id);
+	my $values = $instance->{values};
 	
-	my $name = $record->{name};
-	my $description = $record->{description};
-	my $picture = $record->{picture};
+	my $name = $values->{name};
+	my $description = $values->{description};
+	my $picture = $values->{picture};
 	
 	my $params = {
 		name => $name,

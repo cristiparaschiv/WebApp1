@@ -11,7 +11,7 @@
                     selectedRow = grid.select(),
                     dataItem = grid.dataItem(selectedRow),
                     id = dataItem.id,
-                    urlModel = '[% model %]'.substring(0, '[% model %]'.length - 1);
+                    urlModel = '[% model %]';
 
 				$(location).attr('href', '/' + urlModel + '/view/' + id);
 		});
