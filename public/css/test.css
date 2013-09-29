@@ -1,0 +1,25 @@
+span.k-datepicker {
+    background-image: none;
+}
+.k-datepicker {
+    display: inline-block;
+    vertical-align: middle;
+    width: 15em;
+    white-space: nowrap;
+    border-width: 0;
+    overflow: visible;
+    position: relative;
+    
+}
+
+.k-input {
+    border-style: solid;
+    font-family: inherit;
+    font-size: 100%;
+    
+}
+
+.k-picker-wrap {
+    background-position: 0 center;
+    background-repeat: repeat;
+}

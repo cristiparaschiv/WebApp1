@@ -1,0 +1,2 @@
+<input name="[% field.model %].[% field.name %]" class="n-input" type="text" value="[% field.value %]">
+<span></span>

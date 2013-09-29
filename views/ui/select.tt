@@ -1,0 +1,14 @@
+<select name="[% field.model %].[% field.name %]" class="n-input">
+    [% FOREACH option IN field.options %]
+        [% IF option.key == field.value %]
+            <option value="[% option.key %]" selected>[% option.value %]</option>
+        [% ELSE %]
+            <option value="[% option.key %]">[% option.value %]</option>
+        [% END %]
+    [% END %]
+</select>
+<span></span>
+
+<script>
+    $('select[name="[% field.model %].[% field.name %]"]').kendoComboBox();
+</script>

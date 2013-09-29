@@ -7,16 +7,14 @@
 <link rel="stylesheet" href="[% request.uri_base %]/css/style.css" />
 <link rel="stylesheet" href="[% request.uri_base %]/css/kendo.default.min.css" />
 <link rel="stylesheet" href="[% request.uri_base %]/css/menu.css" />
+<link rel="stylesheet" href="[% request.uri_base %]/css/common.css" />
+<link rel="stylesheet" href="[% request.uri_base %]/css/kendo.css" />
 
 <!-- Grab Google CDN's jQuery. fall back to local if necessary -->
 
 <script type="text/javascript" language="javascript" src="[% request.uri_base %]/javascripts/jquery.js"></script>
 <script type="text/javascript" language="javascript" src="[% request.uri_base %]/javascripts/jquery.min.js"></script>
 <script type="text/javascript" language="javascript" src="[% request.uri_base %]/javascripts/kendo.web.min.js"></script>
-
-<script type="text/javascript">/* <![CDATA[ */
-    !window.jQuery && document.write('<script type="text/javascript" src="[% request.uri_base %]/javascripts/jquery.js"><\/script>')
-/* ]]> */</script>
 
 </head>
 <body>

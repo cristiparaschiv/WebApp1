@@ -1,0 +1,2 @@
+<textarea name="[% field.model %].[% field.name %]" class="n-input">[% field.value %]</textarea>
+<span></span>

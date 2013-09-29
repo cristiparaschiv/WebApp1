@@ -344,3 +344,13 @@ input {
     width: 214px;
     height: 28px;
 }
+
+span.k-combobox {
+    width: 214px;
+    margin-bottom: 10px;
+}
+
+span.combobox input.k-input {
+    width: 176px;
+    font-size: 12px;
+}

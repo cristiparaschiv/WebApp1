@@ -2,22 +2,5 @@
     <label for=[% field.model %].[% field.name %]>
         [% field.display %]:
     </label>
-    [% IF field.type == 'string' || field.type == 'number' %]
-        <input name="[% field.model %].[% field.name %]" class="n-input" type="text" value="[% field.value %]">
-        <span></span>
-    [% ELSIF field.type == 'text' %]
-        <textarea name="[% field.model %].[% field.name %]" class="n-input">[% field.value %]</textarea>
-        <span></span>
-    [% ELSIF field.type == 'select' %]
-        <select name="[% field.model %].[% field.name %]" class="n-input">
-            [% FOREACH option IN field.options %]
-                [% IF option.key == field.value %]
-                    <option value="[% option.key %]" selected>[% option.value %]</option>
-                [% ELSE %]
-                    <option value="[% option.key %]">[% option.value %]</option>
-                [% END %]
-            [% END %]
-        </select>
-        <span></span>
-    [% END %]
+    [% field_content %]
 </div>

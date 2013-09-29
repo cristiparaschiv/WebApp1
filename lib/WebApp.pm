@@ -112,7 +112,9 @@ get '/test' => sub {
 	my $meta = WebApp::Model::Artist->get_option_hash();
 	debug to_dumper $meta;
 	
-	return 1;
+	template 'test';
+	
+	#return 1;
 };
 
 true;
