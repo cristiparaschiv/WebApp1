@@ -116,15 +116,29 @@ post '/biography/add' => sub {
 	return WebApp::Controller::handle_bio($params);
 };
 
-get '/test' => sub {
-	use WebApp::Model;
+# get '/test' => sub {
+	# use WebApp::UI::Tabstrip;
 	
-	my $meta = WebApp::Model::Artist->get_option_hash();
-	debug to_dumper $meta;
+	# my $tabstrip = new WebApp::UI::TabStrip({
+		# tabs => [
+			# 'tab1' => {
+				# text => 'Tab 1',
+				# content => 'hahaha',
+			# },
+			# 'tab2' => {
+				# text => 'Tab 2',
+				# content => 'gjfkgjfkgjf',
+			# },
+			# 'tab3' => {
+				# text => 'Tab 3',
+				# content => 'dfiodifd9',
+			# },
+		# ],
+	# });	
 	
-	template 'test';
+	# template 'test', {test => $tabstrip};
 	
-	#return 1;
-};
+	# #return 1;
+# };
 
 true;

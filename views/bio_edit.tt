@@ -10,9 +10,7 @@
 <script>
 	var bio = '[% bio %]';
 	$('#bio_editor').html(bio);
-	console.log(bio);
 	$('#bio_editor').kendoEditor();
-	//$('#bio_editor').data("kendoEditor").value(bio);
 	
 	$('form').submit(function() {
 		var value = $('#bio_editor').data("kendoEditor").value();

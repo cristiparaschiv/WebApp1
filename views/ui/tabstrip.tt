@@ -1,0 +1,16 @@
+<div id="tabstrip_holder">
+	<ul>
+		[% FOREACH tab IN options.tabs %]
+			<li>[% tab.text %]</li>
+		[% END %]
+	</ul>
+	[% FOREACH tab IN options.tabs %]
+		<div>[% tab.content %]</div>
+	[% END %]
+</div>
+
+<script>
+	$('#tabstrip_holder').kendoTabStrip();
+	var tabStrip = $('#tabstrip_holder').data('kendoTabStrip');
+	tabStrip.select(1);
+</script>

@@ -24,24 +24,4 @@ sub new {
     return (template 'ui/form', {form_data => $form_data, action => $action}, {layout => undef});
 }
 
-#[
-#    {
-#        name => 'name',
-#        display => 'Artist',
-#        type => 'string',
-#        options => {
-#            1 => 'text1',
-#            2 => 'text2',
-#        },
-#        model => 'artist'
-#    },
-#    {
-#        name => 'description',
-#        display => 'Biography',
-#        type => 'text',
-#        options => {},
-#        model => 'artist'
-#    }
-#]
-
 1;

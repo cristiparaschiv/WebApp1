@@ -6,6 +6,12 @@ use Data::Dumper;
 use WebApp::Helper;
 use WebApp::UI::Grid;
 use WebApp::UI::Form;
+use WebApp::Model;
+use WebApp::UI::TabStrip;
+use WebApp::Controller::Artist;
+use WebApp::Controller::Album;
+use WebApp::Controller::Track;
+use WebApp::Controller::Genre;
 
 sub handle_artist {
 	my $method = shift;
@@ -190,13 +196,48 @@ sub list_model {
 	template 'view', {test => $grid, model => $model};
 }
 
+sub browse_objects {
+	my $self = shift;
+	my $data = shift;
+	my $model = shift;
+	
+	my $columns = [
+		{
+			field => 'name',
+			title => 'Title',
+			width => 400,
+		},
+		{
+			command => ['view'],
+			title => '',
+			width => 100,
+		}
+	];
+	
+	my $grid = new WebApp::UI::Grid({
+		datasource => {
+			data => $data,
+			pageSize => 10,
+		},
+		columns => $columns,
+		dom_id => $model . 'Grid',
+		width => '700px',
+		opts => {
+			selectable => 'true',
+			sortable => 'false',
+		}
+	});
+	
+	return (template 'view', {test => $grid, model => $model}, {layout => undef});
+}
+
 
 sub handle_artist_id {
 	my $action = shift;
 	my $id = shift;
 
 	if ($action eq 'view') {
-		artist_view_details($id);
+		WebApp::Controller::Artist->artist_view_details($id);
 	} elsif ($action eq 'edit') {
 		edit($id, 'artist');
 	} elsif ($action eq 'delete') {
@@ -209,7 +250,7 @@ sub handle_album_id {
 	my $id = shift;
 	
 	if ($action eq 'view') {
-		album_view_details($id);
+		WebApp::Controller::Album->album_view_details($id);
 	} elsif ($action eq 'edit') {
 		edit($id, 'album');
 	} elsif ($action eq 'delete') {
@@ -222,7 +263,7 @@ sub handle_track_id {
 	my $id = shift;
 	
 	if ($action eq 'view') {
-		track_view_details($id);
+		WebApp::Controller::Track->track_view_details($id);
 	} elsif ($action eq 'edit') {
 		edit($id, 'track');
 	} elsif ($action eq 'delete') {
@@ -235,7 +276,7 @@ sub handle_genre_id {
 	my $id = shift;
 	
 	if ($action eq 'view') {
-		genre_view_details($id);
+		WebApp::Controller::Genre->genre_view_details($id);
 	} elsif ($action eq 'edit') {
 		edit($id, 'genre');
 	} elsif ($action eq 'delete') {
@@ -251,83 +292,5 @@ sub handle_bio_id {
 		edit($id, 'bio');
 	}
 }
-
-sub artist_view_details {
-	my $id = shift;
-	my $instance = WebApp::Model::Artist->_get($id);
-	my $values = $instance->{values};
-	
-	my $name = $values->{name};
-	my $description = $values->{description};
-	my $picture = $values->{picture};
-debug $description;	
-	my $params = {
-		name => $name,
-		bio => $description,
-		picture => $picture,
-		id => $id,
-	};
-	
-	template 'artist_details', {data => $params};
-}
-
-sub album_view_details {
-	my $id = shift;
-	my $record = database->quick_select('albums', { id => $id });
-	
-	my $artistid = $record->{artistid};
-	my $name = $record->{name};
-	my $release_date = $record->{release_date};
-	my $genreid = $record->{genreid};
-	
-	my $artist = database->quick_select('artists', { id => $artistid });
-	my $artist_name = $artist->{name};
-	
-	my $genre = database->quick_select('genres', { id => $genreid });
-	my $genre_name = $genre->{name};
-	
-	my $params = {
-		artist => $artist_name,
-		name => $name,
-		release_date => $release_date,
-		genre => $genre_name,
-	};
-	
-	template 'album_details', {data => $params};
-}
-
-sub track_view_details {
-	my $id = shift;
-	my $record = database->quick_select('tracks', { id => $id });
-	
-	my $albumid = $record->{albumid};
-	my $name = $record->{name};
-	
-	my $album = database->quick_select('albums', { id => $id });
-	my $album_name = $album->{name};
-	
-	my $params = {
-		name => $name,
-		album => $album_name,
-	};
-	
-	template 'track_details', {data => $params};
-}
-
-sub genre_view_details {
-	my $id = shift;
-	my $record = database->quick_select('genres', { id => $id });
-	
-	my $name = $record->{name};
-	my $description = $record->{description};
-	
-	my $params = {
-		name => $name,
-		description => $description,
-	};
-	
-	template 'genre_details', {data => $params};
-}
-
 
 1;

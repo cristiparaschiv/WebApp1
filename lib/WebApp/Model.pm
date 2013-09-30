@@ -8,6 +8,7 @@ use Dancer;
 use Dancer::Plugin::Database;
 use Tie::IxHash;
 
+
 our $tables = {
     'WebApp::Model::Artist' => 'artists',
     'WebApp::Model::Album' => 'albums',
@@ -45,9 +46,10 @@ sub _get {
 
 sub _get_all {
     my $lib = shift;
+	my $clause = shift // {};
     my $table = $tables->{$lib};
     
-    my @instances = database->quick_select($table, {});
+    my @instances = database->quick_select($table, $clause);
     return \@instances;
 }
 

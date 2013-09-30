@@ -17,7 +17,7 @@ sub fields {
     
     tie (my %fields, 'Tie::IxHash',
          artistid => {
-            name => 'artistit',
+            name => 'artistid',
             display => 'Artist',
             type => 'select',
             value => '',
@@ -35,11 +35,27 @@ sub fields {
          release_date => {
             name => 'release_date',
             display => 'Release Date',
-            type => 'string',
+            type => 'date',
             value => '',
             options => {},
             model => 'album',
          },
+		 summary => {
+			name => 'summary',
+			display => 'Summary',
+			type => 'text',
+			value => '',
+			options => {},
+			model => 'album',
+		 },
+		 playtime => {
+			name => 'playtime',
+			display => 'Play Time',
+			type => 'string',
+			value => '',
+			options => {},
+			model => 'album',
+		 },
          genreid => {
             name => 'genreid',
             display => 'Genre',
