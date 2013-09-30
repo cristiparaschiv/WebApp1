@@ -18,7 +18,9 @@ sub new {
         $field_content = parse_text($field_data);
     } elsif ($type eq 'date') {
         $field_content = parse_date($field_data);
-    }
+    } elsif ($type eq 'boolean') {
+		$field_content = parse_bool($field_data);
+	}
     
     return (template 'ui/field', {field_content => $field_content, field => $field_data}, {layout => undef});
 }
@@ -46,6 +48,12 @@ sub parse_date {
     my $field = shift;
     
     return (template 'ui/date', {field => $field}, {layout => undef});    
+}
+
+sub parse_bool {
+	my $field = shift;
+	
+	return (template 'ui/boolean', {field => $field}, {layout => undef});
 }
 
 1;

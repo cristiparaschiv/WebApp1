@@ -27,7 +27,7 @@ sub _metadata {
         $fields->{_fields}->{$field}->{value} = $values->{$field} // '';
         push @$metadata, $fields->{_fields}->{$field};
     }
-    debug to_dumper $metadata;
+    #debug to_dumper $metadata;
 
     return $metadata;
 }

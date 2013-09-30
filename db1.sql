@@ -4,22 +4,22 @@ USE mydb;
 -- Table Script Creation
 CREATE TABLE artists(
    id INT PRIMARY KEY AUTO_INCREMENT,
-   name VARCHAR(30),
+   name VARCHAR(50),
    description TEXT,
-   date_founded TIMESTAMP,
-   country VARCHAR(30),
-   picture VARCHAR(30)
+   date_founded DATE,
+   country VARCHAR(40),
+   picture VARCHAR(50)
 ) ENGINE=InnoDB;
 
 CREATE TABLE genres(
    id INT PRIMARY KEY AUTO_INCREMENT,
-   name VARCHAR(30),
+   name VARCHAR(50),
    description TEXT
 ) ENGINE=InnoDB;
 
 CREATE TABLE tracks(
    id INT PRIMARY KEY AUTO_INCREMENT,
-   name VARCHAR(30),
+   name VARCHAR(50),
    albumid INT,
    artistid INT,
    playtime TIME,
@@ -30,13 +30,13 @@ CREATE TABLE tracks(
 
 CREATE TABLE albums(
    id INT PRIMARY KEY AUTO_INCREMENT,
-   name VARCHAR(30),
+   name VARCHAR(50),
    artistid INT,
-   release_date TIMESTAMP,
+   release_date DATE,
    summary TEXT,
    playtime TIME,
    genreid INT,
-   picture VARCHAR(30)
+   picture VARCHAR(50)
 ) ENGINE=InnoDB;
 -- Relationships Creation
 ALTER TABLE albums ADD CONSTRAINT artists_albums_CON FOREIGN KEY(artistid) REFERENCES artists (id);

@@ -26,7 +26,7 @@ sub handle_request {
 	my $model	= shift;
 	my $action	= shift;
 	my $id		= shift;
-	
+debug '========================_____________________++++++++++++++++++';debug to_dumper $params;	
 	my $handler = $handlers->{$model};
 	
 	#handle biography actions (non-model)
@@ -71,14 +71,19 @@ sub submit {
 	my $object = {};
 	my $lib = 'WebApp::Model::' . ucfirst($model);
 	my $metadata = $lib->_metadata();
-	
+
 	foreach my $field (@$metadata) {
-		if ($field->{type} eq 'date' and $params->{"$model.$field->{name}" ne '') {
+		if ($field->{type} eq 'date' and $params->{"$model.$field->{name}"} ne '') {
 			$params->{"$model.$field->{name}"} = parse_date($params->{"$model.$field->{name}"});
+		}
+		if ($field->{type} eq 'boolean' and defined $params->{"$model.$field->{name}"}) {
+			$params->{"$model.$field->{name}"} = 1;
+		} elsif ($field->{type} eq 'boolean' and !defined $params->{"$model.$field->{name}"}) {
+			$params->{"$model.$field->{name}"} = 0;
 		}
 		$object->{$field->{name}} = $params->{"$model.$field->{name}"};
 	}
-	
+
 	if (defined $params->{id} and $params->{id} ne '') {
 		$lib->_update($object, $params->{id});
 	} else {

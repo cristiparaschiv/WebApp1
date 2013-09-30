@@ -63,7 +63,15 @@ sub fields {
             value => '',
             options => WebApp::Model::Genre->get_option_hash(),
             model => 'album',
-         }
+         },
+		 picture => {
+			name => 'picture',
+			display => 'Cover',
+			type => 'text',
+			value => '',
+			options => {},
+			model => 'album',
+		 },
     );
     return \%fields;
 }

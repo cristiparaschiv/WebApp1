@@ -31,7 +31,47 @@ sub fields {
             value => '',
             options => {},
             model => 'track',
-         }
+         },
+		 artistid => {
+			name => 'artistid',
+			display => 'Artist',
+			type => 'select',
+			value => '',
+			options => WebApp::Model::Artist->get_option_hash(),
+			model => 'track',
+		 },
+		 playtime => {
+			name => 'playtime',
+			display => 'Play Time',
+			type => 'string',
+			value => '',
+			options => {},
+			model => 'track',
+		 },
+		 lyrics => {
+			name => 'lyrics',
+			display => 'Lyrics',
+			type => 'text',
+			value => '',
+			options => {},
+			model => 'track',
+		 },
+		 summary => {
+			name => 'summary',
+			display => 'Summary',
+			type => 'text',
+			value => '',
+			options => {},
+			model => 'track',
+		 },
+		 recommended => {
+			name => 'recommended',
+			display => 'Recommended',
+			type => 'boolean',
+			value => '',
+			options => {},
+			model => 'track',
+		 },
     );
     return \%fields;
 }

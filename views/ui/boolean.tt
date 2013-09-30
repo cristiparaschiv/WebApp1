@@ -1,0 +1,7 @@
+[% IF field.value == '1' %]
+	<input type=checkbox name="[% field.model %].[% field.name %]" class="n-input" checked>
+[% ELSE %]
+	<input type=checkbox name="[% field.model %].[% field.name %]" class="n-input">
+[% END %]
+
+<span></span>
