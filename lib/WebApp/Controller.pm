@@ -13,63 +13,46 @@ use WebApp::Controller::Album;
 use WebApp::Controller::Track;
 use WebApp::Controller::Genre;
 
-sub handle_artist {
-	my $method = shift;
-	my $action = shift;
-	my $params = shift;
+our $handlers = {
+	'artist' => 'WebApp::Controller::Artist',
+	'album' => 'WebApp::Controller::Album',
+	'track' => 'WebApp::Controller::Track',
+	'genre' => 'WebApp::Controller::Genre',
+};
 
-	if ($action eq 'view') {
-		list_model('artist'); #done
-	} elsif ($action eq 'add' and $method eq 'GET') {
-		add('artist'); #done
-	} elsif ($action eq 'add' and $method eq 'POST') {
-		submit('artist', $params); #done
+sub handle_request {
+	my $method	= shift;
+	my $params	= shift;
+	my $model	= shift;
+	my $action	= shift;
+	my $id		= shift;
+	
+	my $handler = $handlers->{$model};
+	
+	#handle biography actions (non-model)
+	if ($model eq 'biography') {
+		if ($action eq 'edit') {
+			return edit($id, $model);
+		} elsif ($action eq 'add' and $method eq 'POST') {
+			return submit_biography($params);
+		}
 	}
-}
-
-sub handle_album {
-	my $method = shift;
-	my $action = shift;
-	my $params = shift;
 	
 	if ($action eq 'view') {
-		list_model('album');#done
+		return (defined $id) ? $handler->view_details($id) : list_model($model);
+	} elsif ($action eq 'edit') {
+		return (defined $id) ? edit($id, $model) : return (template 'not_found');
+	} elsif ($action eq 'delete') {
+		return (defined $id) ? &delete($id, $model) : return (template 'not_found');
 	} elsif ($action eq 'add' and $method eq 'GET') {
-		add('album');#done
+		return add($model);
 	} elsif ($action eq 'add' and $method eq 'POST') {
-		submit('album', $params);
-	}	
-}
-
-sub handle_track {
-	my $method = shift;
-	my $action = shift;
-	my $params = shift;
-	
-	if ($action eq 'view') {
-		list_model('track');#done
-	} elsif ($action eq 'add' and $method eq 'GET') {
-		add('track');#done
-	} elsif ($action eq 'add' and $method eq 'POST') {
-		submit('track', $params);
+		return submit($model, $params);
 	}
-}
-
-sub handle_genre {
-	my $method = shift;
-	my $action = shift;
-	my $params = shift;
 	
-	if ($action eq 'view') {
-		list_model('genre');#done
-	} elsif ($action eq 'add' and $method eq 'GET') {
-		add('genre');#done
-	} elsif ($action eq 'add' and $method eq 'POST') {
-		submit('genre', $params);
-	}
 }
 
-sub handle_bio {
+sub submit_biography {
 	my $params = shift;
 
 	my $lib = 'WebApp::Model::Artist';
@@ -90,7 +73,7 @@ sub submit {
 	my $metadata = $lib->_metadata();
 	
 	foreach my $field (@$metadata) {
-		if ($field->{type} eq 'date') {
+		if ($field->{type} eq 'date' and $params->{"$model.$field->{name}" ne '') {
 			$params->{"$model.$field->{name}"} = parse_date($params->{"$model.$field->{name}"});
 		}
 		$object->{$field->{name}} = $params->{"$model.$field->{name}"};
@@ -130,7 +113,7 @@ sub edit {
 	my $id = shift;
 	my $model = shift;
 	
-	if ($model eq 'bio') {
+	if ($model eq 'biography') {
 		my $lib = 'WebApp::Model::Artist';
 		my $instance = $lib->_get($id);
 		my $bio = $instance->{values}->{description};
@@ -229,68 +212,6 @@ sub browse_objects {
 	});
 	
 	return (template 'view', {test => $grid, model => $model}, {layout => undef});
-}
-
-
-sub handle_artist_id {
-	my $action = shift;
-	my $id = shift;
-
-	if ($action eq 'view') {
-		WebApp::Controller::Artist->artist_view_details($id);
-	} elsif ($action eq 'edit') {
-		edit($id, 'artist');
-	} elsif ($action eq 'delete') {
-		&delete($id, 'artist');
-	}
-}
-
-sub handle_album_id {
-	my $action = shift;
-	my $id = shift;
-	
-	if ($action eq 'view') {
-		WebApp::Controller::Album->album_view_details($id);
-	} elsif ($action eq 'edit') {
-		edit($id, 'album');
-	} elsif ($action eq 'delete') {
-		&delete ($id, 'album');
-	}
-}
-
-sub handle_track_id {
-	my $action = shift;
-	my $id = shift;
-	
-	if ($action eq 'view') {
-		WebApp::Controller::Track->track_view_details($id);
-	} elsif ($action eq 'edit') {
-		edit($id, 'track');
-	} elsif ($action eq 'delete') {
-		&delete($id, 'track');
-	}
-}
-
-sub handle_genre_id {
-	my $action = shift;
-	my $id = shift;
-	
-	if ($action eq 'view') {
-		WebApp::Controller::Genre->genre_view_details($id);
-	} elsif ($action eq 'edit') {
-		edit($id, 'genre');
-	} elsif ($action eq 'delete') {
-		&delete($id, 'genre');
-	}
-}
-
-sub handle_bio_id {
-	my $action = shift;
-	my $id = shift;
-	
-	if ($action eq 'edit') {
-		edit($id, 'bio');
-	}
 }
 
 1;

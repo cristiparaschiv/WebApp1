@@ -42,103 +42,25 @@ get '/admin' => sub {
 		template 'admin'
 };
 
-get '/artist/:action/:id' => sub {
-        my $action = params->{action};
-        my $id = params->{id};
-        
-        return WebApp::Controller::handle_artist_id($action, $id);
+# ---------- Experimental -----
+any ['get', 'post'] => '/:model/:action' => sub {
+	my $model	= params->{model};
+	my $action	= params->{action};
+	my $method  = request->{method};
+	my $params	= params;
+	
+	return WebApp::Controller::handle_request($method, $params, $model, $action);
 };
 
-get '/album/:action/:id' => sub {
-		my $action = params->{action};
-		my $id = params->{id};
-		
-		return WebApp::Controller::handle_album_id($action, $id);
-};
+any ['get', 'post'] => '/:model/:action/:id' => sub {
+	my $model	= params->{model};
+	my $action	= params->{action};
+	my $id		= params->{id};
+	my $method  = request->{method};
+	my $params	= params;
 
-get '/track/:action/:id' => sub {
-	my $action = params->{action};
-	my $id = params->{id};
-	
-	return WebApp::Controller::handle_track_id($action, $id);
+	return WebApp::Controller::handle_request($method, $params, $model, $action, $id);
 };
-
-get '/genre/:action/:id' => sub {
-	my $action = params->{action};
-	my $id = params->{id};
-	
-	return WebApp::Controller::handle_genre_id($action, $id);
-};
-
-any ['get', 'post'] => '/artist/:action' => sub {
-	my $action = params->{action};
-	my $params = {};
-	$params = params;
-	
-	return WebApp::Controller::handle_artist(request->{method}, $action, $params);
-};
-
-any ['get', 'post'] =>  '/album/:action' => sub {
-	my $action = params->{action};
-	my $params = {};
-	$params = params;
-	
-	return WebApp::Controller::handle_album(request->{method}, $action, $params);
-};
-
-any ['get', 'post'] => '/track/:action' => sub {
-	my $action = params->{action};
-	my $params = {};
-	$params = params;
-	
-	return WebApp::Controller::handle_track(request->{method}, $action, $params);
-};
-
-any ['get', 'post'] => '/genre/:action' => sub {
-	my $action = params->{action};
-	my $params = {};
-	$params = params;
-	
-	return WebApp::Controller::handle_genre(request->{method}, $action, $params);
-};
-
-get '/biography/:action/:id' => sub {
-		my $action = params->{action};
-		my $id = params->{id};
-		
-		return WebApp::Controller::handle_bio_id($action, $id);
-};
-
-post '/biography/add' => sub {
-	my $params = {};
-	$params = params;
-	
-	return WebApp::Controller::handle_bio($params);
-};
-
-# get '/test' => sub {
-	# use WebApp::UI::Tabstrip;
-	
-	# my $tabstrip = new WebApp::UI::TabStrip({
-		# tabs => [
-			# 'tab1' => {
-				# text => 'Tab 1',
-				# content => 'hahaha',
-			# },
-			# 'tab2' => {
-				# text => 'Tab 2',
-				# content => 'gjfkgjfkgjf',
-			# },
-			# 'tab3' => {
-				# text => 'Tab 3',
-				# content => 'dfiodifd9',
-			# },
-		# ],
-	# });	
-	
-	# template 'test', {test => $tabstrip};
-	
-	# #return 1;
-# };
+# -----------------------------
 
 true;

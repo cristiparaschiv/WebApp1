@@ -7,7 +7,7 @@ use WebApp::UI::TabStrip;
 
 our @ISA = qw(WebApp::Controller);
 
-sub artist_view_details {
+sub view_details {
 	my $self = shift;
 	my $id = shift;
 

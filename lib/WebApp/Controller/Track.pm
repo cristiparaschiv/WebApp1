@@ -6,7 +6,7 @@ use WebApp::Controller;
 
 our @ISA = qw(WebApp::Controller);
 
-sub track_view_details {
+sub view_details {
 	my $self = shift;
 	my $id = shift;
 	
