@@ -345,12 +345,14 @@ input {
     height: 28px;
 }
 
-span.k-combobox {
+span.k-combobox,
+span.k-datepicker {
     width: 214px;
     margin-bottom: 10px;
 }
 
-span.combobox input.k-input {
+span.combobox input.k-input,
+span.k-datepicker input.k-input {
     width: 176px;
     font-size: 12px;
 }

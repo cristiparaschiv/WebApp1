@@ -4,6 +4,8 @@ use Dancer;
 use Dancer::Plugin::Database;
 use Data::Dumper;
 use WebApp::Helper;
+use WebApp::UI::Grid;
+use WebApp::UI::Form;
 
 sub handle_artist {
 	my $method = shift;
@@ -61,6 +63,18 @@ sub handle_genre {
 	}
 }
 
+sub handle_bio {
+	my $params = shift;
+
+	my $lib = 'WebApp::Model::Artist';
+	my $instance = $lib->_get($params->{id});
+	my $values = $instance->{values};
+	$values->{description} = $params->{bio_value};
+	$lib->_update($values, $params->{id});
+	
+	redirect '/artist/view/' . $params->{id};
+}
+
 sub submit {
 	my $model = shift;
 	my $params = shift;
@@ -70,6 +84,9 @@ sub submit {
 	my $metadata = $lib->_metadata();
 	
 	foreach my $field (@$metadata) {
+		if ($field->{type} eq 'date') {
+			$params->{"$model.$field->{name}"} = parse_date($params->{"$model.$field->{name}"});
+		}
 		$object->{$field->{name}} = $params->{"$model.$field->{name}"};
 	}
 	
@@ -79,6 +96,17 @@ sub submit {
 		$lib->_add($object);
 	}	
 	redirect '/' . $model . '/view';
+}
+
+sub parse_date {
+	my $date = shift;
+	
+	my @values = split('/', $date);
+	my $month = $values[0];
+	my $day = $values[1];
+	my $year = $values[2];
+	
+	return "$year-$month-$day 00:00:00";
 }
 
 sub add {
@@ -96,13 +124,28 @@ sub edit {
 	my $id = shift;
 	my $model = shift;
 	
-	my $lib = 'WebApp::Model::' . ucfirst($model);
-	my $action = '/' . $model . '/add?id=' . $id;
-	my $instance = $lib->_get($id);
-	my $metadata = $lib->_metadata($instance->{values});
-	my $form = new WebApp::UI::Form($model, $metadata, $action);
+	if ($model eq 'bio') {
+		my $lib = 'WebApp::Model::Artist';
+		my $instance = $lib->_get($id);
+		my $bio = $instance->{values}->{description};
+		my $action = '/biography/add?id=' . $id;
 
-	template 'add', {form => $form};
+		$bio =~ s/</&lt;/g;
+		$bio =~ s/>/&gt;/g;
+		$bio =~ s/"/&quot;/g;
+		$bio =~ s/'/&#39;/g;
+		$bio =~ s/\//&#x2F;/g;
+
+		template 'bio_edit', {bio => $bio, action => $action};
+	} else {
+		my $lib = 'WebApp::Model::' . ucfirst($model);
+		my $action = '/' . $model . '/add?id=' . $id;
+		my $instance = $lib->_get($id);
+		my $metadata = $lib->_metadata($instance->{values});
+		my $form = new WebApp::UI::Form($model, $metadata, $action);
+
+		template 'add', {form => $form};
+	}
 }
 
 sub delete {
@@ -200,6 +243,15 @@ sub handle_genre_id {
 	}
 }
 
+sub handle_bio_id {
+	my $action = shift;
+	my $id = shift;
+	
+	if ($action eq 'edit') {
+		edit($id, 'bio');
+	}
+}
+
 sub artist_view_details {
 	my $id = shift;
 	my $instance = WebApp::Model::Artist->_get($id);
@@ -208,11 +260,12 @@ sub artist_view_details {
 	my $name = $values->{name};
 	my $description = $values->{description};
 	my $picture = $values->{picture};
-	
+debug $description;	
 	my $params = {
 		name => $name,
 		bio => $description,
 		picture => $picture,
+		id => $id,
 	};
 	
 	template 'artist_details', {data => $params};

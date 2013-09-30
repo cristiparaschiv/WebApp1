@@ -1,0 +1,23 @@
+<div class="form-holder">
+    <form class="n-form" method="POST" action=[% action %]>
+		<textarea id="bio_editor" name="biography"></textarea>
+		<input type=hidden name="bio_value">
+		<br>
+        <button type="submit" class="btn">Submit</button>
+	</form>
+</div>
+
+<script>
+	var bio = '[% bio %]';
+	$('#bio_editor').html(bio);
+	console.log(bio);
+	$('#bio_editor').kendoEditor();
+	//$('#bio_editor').data("kendoEditor").value(bio);
+	
+	$('form').submit(function() {
+		var value = $('#bio_editor').data("kendoEditor").value();
+		$('input[name="bio_value"]').val(value);
+		return;
+	});
+	
+</script>

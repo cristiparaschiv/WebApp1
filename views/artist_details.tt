@@ -2,5 +2,7 @@
 
 <div id="artist_content">
     <img id="artist_picture" src="[% request.uri_base %]/images/artists/[% data.picture %]">
-    [% data.bio %]
+    <span>[% data.bio %]</span>
+	<br>
+	<a href="/biography/edit/[% data.id %]">Edit biography</a>
 </div>

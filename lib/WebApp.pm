@@ -1,10 +1,6 @@
 package WebApp;
 use Dancer ':syntax';
-use Dancer::Plugin::SimpleCRUD;
 use Dancer::Plugin::Database;
-use WebApp::UI::Grid;
-use WebApp::Datasource;
-use WebApp::UI::Form;
 use JSON;
 use WebApp::Controller;
 
@@ -104,6 +100,20 @@ any ['get', 'post'] => '/genre/:action' => sub {
 	$params = params;
 	
 	return WebApp::Controller::handle_genre(request->{method}, $action, $params);
+};
+
+get '/biography/:action/:id' => sub {
+		my $action = params->{action};
+		my $id = params->{id};
+		
+		return WebApp::Controller::handle_bio_id($action, $id);
+};
+
+post '/biography/add' => sub {
+	my $params = {};
+	$params = params;
+	
+	return WebApp::Controller::handle_bio($params);
 };
 
 get '/test' => sub {

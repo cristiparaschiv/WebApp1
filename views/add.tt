@@ -2,7 +2,7 @@
 
 <script>
     $(document).ready(function() {
-        $('.k-combobox input.k-input').css({
+        $('.k-combobox input.k-input, .k-datepicker input.k-input').css({
             "width" : "176px",
             "margin-bottom" : "0px",
             "font-size": "12px"

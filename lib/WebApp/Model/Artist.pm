@@ -32,6 +32,14 @@ sub fields {
             options => {},
             model => 'artist',
         },
+		date_founded => {
+			name => 'date_founded',
+			display => 'Date Founded',
+			type => 'date',
+			value => '',
+			options => {},
+			model => 'artist',
+		},
         picture => {
             name => 'picture',
             display => 'Picture',
