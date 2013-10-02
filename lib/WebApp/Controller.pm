@@ -81,7 +81,7 @@ sub submit {
 
 	foreach my $field (@$metadata) {
 		if ($field->{type} eq 'date' and $params->{"$model.$field->{name}"} ne '') {
-			$params->{"$model.$field->{name}"} = parse_date($params->{"$model.$field->{name}"});
+			$params->{"$model.$field->{name}"} = WebApp::Helper->parse_date($params->{"$model.$field->{name}"});
 		}
 		if ($field->{type} eq 'boolean' and defined $params->{"$model.$field->{name}"}) {
 			$params->{"$model.$field->{name}"} = 1;
@@ -97,17 +97,6 @@ sub submit {
 		$lib->_add($object);
 	}	
 	redirect '/' . $model . '/view';
-}
-
-sub parse_date {
-	my $date = shift;
-	
-	my @values = split('/', $date);
-	my $month = $values[0];
-	my $day = $values[1];
-	my $year = $values[2];
-	
-	return "$year-$month-$day 00:00:00";
 }
 
 sub add {

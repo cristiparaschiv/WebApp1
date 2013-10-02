@@ -5,6 +5,7 @@ use WebApp::Model::Album;
 use WebApp::Model::Track;
 use WebApp::Model::Genre;
 use WebApp::Model::Picture;
+use WebApp::Helper;
 use Dancer;
 use Dancer::Plugin::Database;
 use Tie::IxHash;
@@ -26,6 +27,10 @@ sub _metadata {
     
     foreach my $field (keys %{$fields->{_fields}}) {
         $fields->{_fields}->{$field}->{value} = $values->{$field} // '';
+		if ($fields->{_fields}->{$field}->{type} eq 'date') {
+			my $formated_date = WebApp::Helper->db_to_date($values->{$field});
+			$fields->{_fields}->{$field}->{value} = $formated_date;
+		}
         push @$metadata, $fields->{_fields}->{$field};
     }
     #debug to_dumper $metadata;

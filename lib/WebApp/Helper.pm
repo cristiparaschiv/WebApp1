@@ -1,5 +1,6 @@
 package WebApp::Helper;
 
+use Dancer;
 use Dancer::Plugin::Database;
 
 sub get_columns {
@@ -60,6 +61,27 @@ sub get_columns {
         ];
     }
     
+}
+
+sub parse_date {
+    my $self = shift;
+	my $date = shift;
+	
+	my @values = split('/', $date);
+	my $month = $values[0];
+	my $day = $values[1];
+	my $year = $values[2];
+	
+	return "$year-$month-$day 00:00:00"; # Will be changed when moving from TIMESTAMP to DATE
+}
+
+sub db_to_date {
+    my $self = shift;
+    my $date = shift;
+    
+    $date =~ m/(\d+)-(\d+)-(\d+)/;
+    
+    return "$2/$3/$1";
 }
 
 1;
