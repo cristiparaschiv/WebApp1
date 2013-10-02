@@ -1,6 +1,7 @@
 package WebApp;
 use Dancer ':syntax';
 use Dancer::Plugin::Database;
+use Dancer::Request::Upload;
 use JSON;
 use WebApp::Controller;
 
@@ -46,9 +47,10 @@ get '/admin' => sub {
 any ['get', 'post'] => '/:model/:action' => sub {
 	my $model	= params->{model};
 	my $action	= params->{action};
-	my $method  = request->{method};
+	my $method  	= request->{method};
 	my $params	= params;
-	
+	my $uploads 	= request->uploads // {};
+	$params->{uploads} = $uploads;
 	return WebApp::Controller::handle_request($method, $params, $model, $action);
 };
 
@@ -56,9 +58,10 @@ any ['get', 'post'] => '/:model/:action/:id' => sub {
 	my $model	= params->{model};
 	my $action	= params->{action};
 	my $id		= params->{id};
-	my $method  = request->{method};
+	my $method  	= request->{method};
 	my $params	= params;
-
+	my $uploads 	= request->uploads // {};
+	$params->{uploads} = $uploads;
 	return WebApp::Controller::handle_request($method, $params, $model, $action, $id);
 };
 # -----------------------------

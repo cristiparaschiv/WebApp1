@@ -4,6 +4,7 @@ use WebApp::Model::Artist;
 use WebApp::Model::Album;
 use WebApp::Model::Track;
 use WebApp::Model::Genre;
+use WebApp::Model::Picture;
 use Dancer;
 use Dancer::Plugin::Database;
 use Tie::IxHash;

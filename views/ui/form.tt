@@ -1,4 +1,4 @@
-<h2>Configuring Artist</h2>
+<h2>Configuring [% form_data.name %]</h2>
 
 <div class="form-holder">
     <form class="n-form" method="POST" action=[% action %]>

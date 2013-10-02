@@ -19,6 +19,7 @@ sub new {
     my $form_data = {
         fields => $fields,
         model => $model,
+        name => ucfirst($model), 
     };
     
     return (template 'ui/form', {form_data => $form_data, action => $action}, {layout => undef});

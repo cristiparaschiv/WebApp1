@@ -4,4 +4,6 @@
     [% data.release_date %]
     
     [% data.genre %]
+    
+    <img id="artist_picture" src="[% request.uri_base %]/images/covers/[% data.picture %]">
 </div>

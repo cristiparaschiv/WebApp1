@@ -67,7 +67,7 @@ sub fields {
 		 picture => {
 			name => 'picture',
 			display => 'Cover',
-			type => 'text',
+			type => 'upload',
 			value => '',
 			options => {},
 			model => 'album',

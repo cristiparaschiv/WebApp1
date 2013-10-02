@@ -19,8 +19,10 @@ sub new {
     } elsif ($type eq 'date') {
         $field_content = parse_date($field_data);
     } elsif ($type eq 'boolean') {
-		$field_content = parse_bool($field_data);
-	}
+	$field_content = parse_bool($field_data);
+    } elsif ($type eq 'upload') {
+	$field_content = parse_upload($field_data);
+    }
     
     return (template 'ui/field', {field_content => $field_content, field => $field_data}, {layout => undef});
 }
@@ -54,6 +56,12 @@ sub parse_bool {
 	my $field = shift;
 	
 	return (template 'ui/boolean', {field => $field}, {layout => undef});
+}
+
+sub parse_upload {
+    my $field = shift;
+    
+    return (template 'ui/upload', {field => $field}, {layout => undef});
 }
 
 1;

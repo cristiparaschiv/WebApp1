@@ -356,3 +356,7 @@ span.k-datepicker input.k-input {
     width: 176px;
     font-size: 12px;
 }
+
+div.k-upload-button {
+    width: 160px;
+}

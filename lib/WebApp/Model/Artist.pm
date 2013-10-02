@@ -43,7 +43,7 @@ sub fields {
         picture => {
             name => 'picture',
             display => 'Picture',
-            type => 'string',
+            type => 'upload',
             value => '',
             options => {},
             model => 'artist',

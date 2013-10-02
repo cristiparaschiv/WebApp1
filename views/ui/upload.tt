@@ -1,0 +1,26 @@
+
+    <input name="[% field.model %].[% field.name %].upload" class="n-input" type="file">
+    <input name="[% field.model %].[% field.name %]" class="n-input" type="text" value="[% field.value %]">
+    
+    <span></span>
+
+<script>
+   $('input[name="[% field.model %].[% field.name %].upload"]').kendoUpload({
+        async: {
+            saveUrl: '/[% field.model %]/upload',
+        },
+        complete: onUpload,
+        showFileList: false,
+   });
+   
+   $('input[name="[% field.model %].[% field.name %]"]').css("margin-left", "160px");
+   
+    function onUpload(e) {
+        e.preventDefault();
+        console.log(e.files);
+        var value = $('input[name="[% field.model %].[% field.name %].upload"]').val();
+        var filename = value.split(/(\\|\/)/g).pop();
+        
+        $('input[name="[% field.model %].[% field.name %]"]').val(filename);
+    }
+</script>

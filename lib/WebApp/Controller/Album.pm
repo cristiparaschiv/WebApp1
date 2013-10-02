@@ -16,6 +16,7 @@ sub view_details {
 	my $artistid = $values->{artistid};
 	my $name = $values->{name};
 	my $release_date = $values->{release_date};
+	my $picture = $values->{picture};
 	my $genreid = $values->{genreid};
 
 	my $artist = WebApp::Model::Artist->_get_all({id => $artistid});
@@ -29,6 +30,7 @@ sub view_details {
 		name => $name,
 		release_date => $release_date,
 		genre => $genre_name,
+		picture => $picture,
 	};
 	
 	template 'album_details', {data => $params};

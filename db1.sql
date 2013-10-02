@@ -38,6 +38,13 @@ CREATE TABLE albums(
    genreid INT,
    picture VARCHAR(50)
 ) ENGINE=InnoDB;
+
+CREATE TABLE pictures(
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(50),
+    type VARCHAR(20),
+    filename VARCHAR(50)
+) ENGINE=InnoDB;
 -- Relationships Creation
 ALTER TABLE albums ADD CONSTRAINT artists_albums_CON FOREIGN KEY(artistid) REFERENCES artists (id);
 ALTER TABLE tracks ADD CONSTRAINT artists_tracks_CON FOREIGN KEY(artistid) REFERENCES artists (id);

@@ -2,6 +2,7 @@ package WebApp::Controller;
 
 use Dancer;
 use Dancer::Plugin::Database;
+use Dancer::Request::Upload;
 use Data::Dumper;
 use WebApp::Helper;
 use WebApp::UI::Grid;
@@ -12,6 +13,10 @@ use WebApp::Controller::Artist;
 use WebApp::Controller::Album;
 use WebApp::Controller::Track;
 use WebApp::Controller::Genre;
+
+use Cwd qw/realpath/;
+use FindBin;
+
 
 our $handlers = {
 	'artist' => 'WebApp::Controller::Artist',
@@ -48,6 +53,8 @@ sub handle_request {
 		return add($model);
 	} elsif ($action eq 'add' and $method eq 'POST') {
 		return submit($model, $params);
+	} elsif ($action eq 'upload' and $method eq 'POST') {
+		return upload($model, $params);
 	}
 	
 }
@@ -150,6 +157,25 @@ sub delete {
 	$lib->_delete($id);
 	
 	redirect '/' . $model . '/view';
+}
+
+sub upload {
+	my $model = shift;
+	my $params = shift;
+	
+    my $appdir = realpath("$FindBin::Bin/..");
+	
+	if ($model eq 'artist') {
+		my $upload = $params->{uploads}->{'artist.picture.upload'};
+		my $path = $appdir . '/public/images/artists/' . $upload->filename;
+		$upload->copy_to($path);
+	} elsif ($model eq 'album') {
+		my $upload = $params->{uploads}->{'album.picture.upload'};
+		my $path = $appdir . '/public/images/covers/' . $upload->filename;
+		$upload->copy_to($path);
+	}
+		
+	return 1;
 }
 
 sub list_model {
