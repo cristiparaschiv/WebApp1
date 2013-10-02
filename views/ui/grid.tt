@@ -1,8 +1,10 @@
 <div class="grid-holder">
-		<div id="grid_filter">
-				<label for="filter">Filter:</label>
-				<input type=text name=filter id="filter-grid">
-		</div>
+		[% IF grid.filter == 'true' %]
+				<div id="grid_filter">
+						<label for="filter">Filter:</label>
+						<input type=text name=filter id="filter-grid">
+				</div>
+		[% END %]
 		<div id="[% grid.dom_id %]"></div>
 </div>
 <script>

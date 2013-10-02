@@ -17,6 +17,7 @@ sub new {
 	my $width = $data->{width} // '500px';
 	my $selectable = $data->{opts}->{selectable} // 'false';
 	my $sortable = $data->{opts}->{sortable} // 'false';
+	my $filter = $data->{opts}->{filter} // 'true';
 	
 	my $grid = {
 		datasource => to_json($datasource),
@@ -25,6 +26,7 @@ sub new {
 		width => $width,
 		selectable => $selectable,
 		sortable => $sortable,
+		filter => $filter,
 	};
 	
 	my $template = Template->new({

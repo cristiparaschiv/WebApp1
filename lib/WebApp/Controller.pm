@@ -26,7 +26,7 @@ sub handle_request {
 	my $model	= shift;
 	my $action	= shift;
 	my $id		= shift;
-debug '========================_____________________++++++++++++++++++';debug to_dumper $params;	
+	
 	my $handler = $handlers->{$model};
 	
 	#handle biography actions (non-model)
@@ -213,6 +213,7 @@ sub browse_objects {
 		opts => {
 			selectable => 'true',
 			sortable => 'false',
+			filter => 'false',
 		}
 	});
 	
