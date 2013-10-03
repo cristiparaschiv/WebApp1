@@ -178,6 +178,11 @@ sub list_model {
 	}
 	
 	my $columns = WebApp::Helper->get_columns($model);
+	
+	if (session('user') eq 'cristi') {
+		my $commands = $columns->[1]->{command};
+		push @$commands, 'edit';
+	}
 	my $grid = new WebApp::UI::Grid({
 			datasource => {
 					data => $ds,

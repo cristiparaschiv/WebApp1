@@ -17,7 +17,7 @@ sub get_columns {
             {
                     command => ['view'],
                     title => '',
-                    width => 100
+                    width => 150
             }  
         ];
     } elsif ($model eq 'album') {
@@ -30,7 +30,7 @@ sub get_columns {
             {
                     command => ['view'],
                     title => '',
-                    width => 100
+                    width => 150
             }  
         ];
     } elsif ($model eq 'track') {
@@ -43,7 +43,7 @@ sub get_columns {
             {
                 command => ['view'],
                 title => '',
-                width => 100
+                width => 150
             }
         ];
     } elsif ($model eq 'genre') {
@@ -56,7 +56,7 @@ sub get_columns {
             {
                 command => ['view'],
                 title => '',
-                width => 100
+                width => 150
             }
         ];
     }

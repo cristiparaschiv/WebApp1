@@ -13,12 +13,13 @@ get '/' => sub {
     template 'index';
 };
 
-# hook 'before' => sub {
-	# if (! session('user') && request->path_info !~ m{^/login}) {
-		# var requested_path => request->path_info;
-		# request->path_info('/login');
-	# }
-# };
+hook 'before' => sub {
+	session user => 'cristi'; # hardcoding for now user in session
+	if (! session('user') && request->path_info !~ m{^/login}) {
+		var requested_path => request->path_info;
+		request->path_info('/login');
+	}
+};
 
 get '/login' => sub {
 	template 'login', { path => vars->{requested_path} }, { layout=> undef };

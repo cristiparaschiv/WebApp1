@@ -3,6 +3,13 @@
     [% test %]
 </div>
 
+[% IF session.user == 'cristi' %]
+
+	<br>
+	<a href="/[% model %]/add" class="k-button">Add [% model %]</a>
+
+[% END %]
+
 <script>
     $(document).ready(function() {
         $(document).on('click', '.k-grid-view', function(e) {
