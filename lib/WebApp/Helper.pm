@@ -72,7 +72,7 @@ sub parse_date {
 	my $day = $values[1];
 	my $year = $values[2];
 	
-	return "$year-$month-$day 00:00:00"; # Will be changed when moving from TIMESTAMP to DATE
+	return "$year-$month-$day"; # Will be changed when moving from TIMESTAMP to DATE
 }
 
 sub db_to_date {
