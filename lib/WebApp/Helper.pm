@@ -84,4 +84,17 @@ sub db_to_date {
     return "$2/$3/$1";
 }
 
+sub parse_bio {
+    my $self = shift;
+    my $bio = shift;
+    
+    $bio =~ s/</&lt;/g;
+    $bio =~ s/>/&gt;/g;
+    $bio =~ s/"/&quot;/g;
+    $bio =~ s/'/&#39;/g;
+    $bio =~ s/\//&#x2F;/g;
+    
+    return $bio;
+}
+
 1;

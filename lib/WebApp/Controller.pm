@@ -120,11 +120,7 @@ sub edit {
 		my $bio = $instance->{values}->{description};
 		my $action = '/biography/add?id=' . $id;
 
-		$bio =~ s/</&lt;/g;
-		$bio =~ s/>/&gt;/g;
-		$bio =~ s/"/&quot;/g;
-		$bio =~ s/'/&#39;/g;
-		$bio =~ s/\//&#x2F;/g;
+		$bio = WebApp::Helper->parse_bio($bio);
 
 		template 'bio_edit', {bio => $bio, action => $action};
 	} else {
