@@ -1,0 +1,28 @@
+<ul class="n-megamenu-test" id="menuHolder" style="width:100%">
+    [% FOREACH entry IN session.megamenu %]
+        <li class="n">
+            <a href="#"><span>[% entry.key %]</span></a>
+                <ul>
+                    [% FOREACH item IN entry.value %]
+                        <li>
+                            <a href="#"><span>[% item.key %]</span></a>
+                            <ul>
+                                [% FOREACH action IN item.value %]
+                                    <li>
+                                        <a href="/[% action.value.controller %]/[% action.value.action %]"><span>[% action.key %]</span></a>
+                                    </li>
+                                [% END %]
+                            </ul>
+                        </li>
+                            
+                        
+                    [% END %]
+                </ul>
+        </li>
+    [% END %]
+    <li>
+        <a href="/logout">
+            <span>Log out</span>
+        </a>
+    </li>
+</ul>

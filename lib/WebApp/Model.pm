@@ -5,6 +5,7 @@ use WebApp::Model::Album;
 use WebApp::Model::Track;
 use WebApp::Model::Genre;
 use WebApp::Model::Picture;
+use WebApp::Model::Tool;
 use WebApp::Helper;
 use Dancer;
 use Dancer::Plugin::Database;
@@ -16,6 +17,8 @@ our $tables = {
     'WebApp::Model::Album' => 'albums',
     'WebApp::Model::Track' => 'tracks',
     'WebApp::Model::Genre' => 'genres',
+	'WebApp::Model::Tool' => 'tools',
+	'WebApp::Model::Picture' => 'pictures',
 };
 
 sub _metadata {

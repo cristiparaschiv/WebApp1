@@ -1,0 +1,133 @@
+ul.n-megamenu-test ul{display:none}
+ul.n-megamenu-test li:hover>ul{display:block}
+ul.n-megamenu-test ul{position: absolute;left:-1px;top:98%;}
+ul.n-megamenu-test ul ul{position: absolute;left:98%;top:-2px;}
+ul.n-megamenu-test,ul.n-megamenu-test ul {
+	margin:0px;
+	list-style:none;
+	padding:0px 2px 2px 0px;
+	background-color:#F0713A;
+	background-repeat:repeat;
+	border-color:#F26324;
+    border-radius: 5px 5px 0px 0px;
+	z-index: 1020;
+	cursor: pointer;
+}
+ul.n-megamenu-test table {border-collapse:collapse}ul.n-megamenu-test {
+	display:block;
+	zoom:1;
+	float: left;
+}
+ul.n-megamenu-test ul{
+	width:153.3px;
+}
+ul.n-megamenu-test li{
+	display:block;
+	margin:2px 0px 0px 2px;
+	font-size:0px;
+}
+ul.n-megamenu-test a:active, ul.n-megamenu-test a:focus {
+outline-style:none;
+}
+ul.n-megamenu-test a, ul.n-megamenu-test li.dis a:hover, ul.n-megamenu-test li.sep a:hover {
+	display:block;
+	vertical-align:middle;
+	background-color:#F0713A;
+	border-width:1px;
+	border-color:#F0713A;
+	border-style:solid;
+	text-align:left;
+	text-decoration:none;
+	padding:2px 5px 2px 10px;
+	_padding-left:0;
+	font:normal 14px Trebuchet MS,Tahoma;
+    font-family: "Lucida Grande", "Bitstream Vera Sans", "Verdana";
+	color: #FFFFFF;
+    font-weight: bold;
+	text-decoration:none;
+	cursor:default;
+	z-index: 1020;
+	cursor: pointer;
+}
+ul.n-megamenu-test span{
+	overflow:hidden;
+}
+ul.n-megamenu-test li {
+	float:left;
+}
+ul.n-megamenu-test ul li {
+	float:none;
+}
+ul.n-megamenu-test ul a {
+	text-align:left;
+	white-space:nowrap;
+}
+ul.n-megamenu-test li.sep{
+	text-align:left;
+	padding:0px;
+	line-height:0;
+	height:100%;
+}
+ul.n-megamenu-test li.sep span{
+	float:none;	padding-right:0;
+	width:3px;
+	height:100%;
+	display:inline-block;
+	background-color:#cccccc #111111 #111111 #cccccc;	background-image:none;}
+ul.n-megamenu-test ul li.sep span{
+	width:100%;
+	height:3px;
+}
+ul.n-megamenu-test li:hover{
+	position:relative;
+}
+ul.n-megamenu-test li:hover>a{
+	background-color:#F26324;
+	border-color:#F26324;
+	border-style:solid;
+	font:normal 14px Trebuchet MS,Tahoma;
+    font-family: "Lucida Grande", "Bitstream Vera Sans", "Verdana";
+	color: #FFFFFF;
+	text-decoration:none;
+	z-index: 1020;
+}
+ul.n-megamenu-test li a:hover{
+	position:relative;
+	background-color:#F26324;
+	border-color:#F26324;
+	border-style:solid;
+	font:normal 14px Trebuchet MS,Tahoma;
+    font-family: "Lucida Grande", "Bitstream Vera Sans", "Verdana";
+	color: #FFFFFF;
+    font-weight: bold;
+	text-decoration:none;
+	z-index: 1020;
+}
+ul.n-megamenu-test li.dis a {
+	color: #666 !important;
+}
+ul.n-megamenu-test img {border: none;float:left;_float:none;margin-right:2px;width:16px;
+height:16px;
+}
+ul.n-megamenu-test ul img {width:16px;
+height:16px;
+}
+ul.n-megamenu-test img.over{display:none}
+ul.n-megamenu-test li.dis a:hover img.over{display:none !important}
+ul.n-megamenu-test li.dis a:hover img.def {display:inline !important}
+ul.n-megamenu-test li:hover > a img.def  {display:none}
+ul.n-megamenu-test li:hover > a img.over {display:inline}
+ul.n-megamenu-test a:hover img.over,ul.n-megamenu-test a:hover ul img.def,ul.n-megamenu-test a:hover a:hover ul img.def,ul.n-megamenu-test a:hover a:hover img.over,ul.n-megamenu-test a:hover a:hover a:hover img.over{display:inline}
+ul.n-megamenu-test a:hover img.def,ul.n-megamenu-test a:hover ul img.over,ul.n-megamenu-test a:hover a:hover ul img.over,ul.n-megamenu-test a:hover a:hover img.def,ul.n-megamenu-test a:hover a:hover a:hover img.def{display:none}
+ul.n-megamenu-test a:hover ul,ul.n-megamenu-test a:hover a:hover ul{display:block}
+ul.n-megamenu-test a:hover ul ul{display:none}
+ul.n-megamenu-test span{
+	display:block;
+	background-image:url(/public/images/arr_white.gif);
+	background-position:right center;
+	background-repeat: no-repeat;
+   padding-right:12px;}
+ul.n-megamenu-test li:hover>a>span{	background-image:url(/public/images/arrv_white.gif);
+}
+ul.n-megamenu-test a:hover span{	_background-image:url(/public/images/arrv_white.gif)}
+ul.n-megamenu-test ul span,ul.n-megamenu-test a:hover table span{background-image:url(/public/images/arr_white.gif)}

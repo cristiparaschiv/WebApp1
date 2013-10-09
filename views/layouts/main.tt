@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="[% request.uri_base %]/css/style.css" />
 <link rel="stylesheet" href="[% request.uri_base %]/css/kendo.default.min.css" />
 <link rel="stylesheet" href="[% request.uri_base %]/css/menu.css" />
+<link rel="stylesheet" href="[% request.uri_base %]/css/menu1.css" />
 <link rel="stylesheet" href="[% request.uri_base %]/css/common.css" />
 <link rel="stylesheet" href="[% request.uri_base %]/css/kendo.css" />
 
@@ -21,29 +22,8 @@
     <div id="container">
         <div id="logo">LOGO HERE</div>
         <div id="menu">
-            
-            <ul id="menuHolder" class="n-megamenu" style="width:100%">
-                <li class="n-megamenu-tab">
-                    <span>
-                        <a href="/">Home</a>
-                    </span>
-                </li>
-                <li class="n-megamenu-tab">
-                    <span>
-                        <a href="/artist/view">Browse Artists</a>
-                    </span>
-                </li>
-                <li class="n-megamenu-tab">
-                    <span>
-                        <a href="/contact">Contact</a>
-                    </span>
-                </li>
-                <li class="n-megamenu-action n-megamenu-tab">
-                    <span>
-                        <a href="/logout">Log out</a>
-                    </span>
-                </li>
-            </ul>
+       [% INCLUDE menu.tt %]     
+
     
             
         </div>

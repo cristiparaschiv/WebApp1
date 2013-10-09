@@ -4,6 +4,7 @@ use Dancer::Plugin::Database;
 use Dancer::Request::Upload;
 use JSON;
 use WebApp::Controller;
+use WebApp::Menu;
 
 set template => 'template_toolkit';
 
@@ -19,6 +20,10 @@ hook 'before' => sub {
 		var requested_path => request->path_info;
 		request->path_info('/login');
 	}
+	
+	# Get megamenu
+	my $menu = new WebApp::Menu;
+	session megamenu => $menu;
 };
 
 get '/login' => sub {
@@ -66,5 +71,9 @@ any ['get', 'post'] => '/:model/:action/:id' => sub {
 	return WebApp::Controller::handle_request($method, $params, $model, $action, $id);
 };
 # -----------------------------
+
+get '/test' => sub {
+	template 'menu';
+};
 
 true;
