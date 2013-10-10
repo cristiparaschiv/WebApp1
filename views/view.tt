@@ -22,5 +22,15 @@
 
 				$(location).attr('href', '/' + urlModel + '/view/' + id);
 		});
+		$(document).on('click', '.k-grid-edit', function(e) {
+				e.preventDefault();
+				var grid = $('#[% model %]Grid').data('kendoGrid'),
+                    selectedRow = grid.select(),
+                    dataItem = grid.dataItem(selectedRow),
+                    id = dataItem.id,
+                    urlModel = '[% model %]';
+
+				$(location).attr('href', '/' + urlModel + '/edit/' + id);
+		});
     });
 </script>
