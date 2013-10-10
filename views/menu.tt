@@ -1,28 +1,97 @@
-<ul class="n-megamenu-test" id="menuHolder" style="width:100%">
-    [% FOREACH entry IN session.megamenu %]
-        <li class="n">
-            <a href="#"><span>[% entry.key %]</span></a>
-                <ul>
-                    [% FOREACH item IN entry.value %]
-                        <li>
-                            <a href="#"><span>[% item.key %]</span></a>
-                            <ul>
-                                [% FOREACH action IN item.value %]
-                                    <li>
-                                        <a href="/[% action.value.controller %]/[% action.value.action %]"><span>[% action.key %]</span></a>
-                                    </li>
-                                [% END %]
-                            </ul>
-                        </li>
-                            
-                        
-                    [% END %]
-                </ul>
-        </li>
-    [% END %]
-    <li>
-        <a href="/logout">
-            <span>Log out</span>
-        </a>
-    </li>
-</ul>
+[% PERL %]
+    my $menu = $stash->get('session.megamenu');
+    my $size = scalar @{$menu};
+    my $menu_hash = {};
+    
+    foreach my $entry (@$menu) {
+        my @path_parts = split('/', $entry->{path});
+        $entry->{top} = $path_parts[0];
+        $entry->{group} = $path_parts[1];
+    }
+    
+    my @a = ();
+
+    for (my $i=1;$i<=$size;$i++) {
+        foreach my $entry (@$menu) {
+            if ($entry->{order} == $i) {
+                if (! exists $menu_hash->{$entry->{top}}) {
+                    $menu_hash->{$entry->{top}} = {};
+                    push @a, ["$entry->{top}", []];
+                }
+                
+                if (! exists $menu_hash->{$entry->{top}}->{$entry->{group}}) {
+                    $menu_hash->{$entry->{top}}->{$entry->{group}} = {};
+                    foreach my $e (@a) {
+						if ($e->[0] eq $entry->{top}) {
+							push @{$e->[1]}, ["$entry->{group}", []];
+						}
+                    }
+                }
+               
+                if (! exists $menu_hash->{$entry->{top}}->{$entry->{group}}->{$entry->{menuname}}) {
+                    $menu_hash->{$entry->{top}}->{$entry->{group}}->{$entry->{menuname}} = {};
+                    foreach my $e (@a) {
+						foreach my $i (@$e) {
+							if (ref $i eq 'ARRAY') {
+								foreach my $w (@$i) {
+									#print Dumper $w->[0] if ref $w eq 'ARRAY';
+									if ($w->[0] eq $entry->{group}) {
+										#print Dumper $w->[0];
+										push @{$w->[1]}, $entry->{menuname};
+									}
+								}
+							}
+						}
+                    }
+                }
+            }
+        }
+    }    
+    
+    # printing the menu
+    print "<ul class=\"n-megamenu-test\">";
+    
+    print "<li><a href=\"/\"><span>Home</span></a></li>";
+    
+    foreach my $item (@a) {
+		#print Dumper $item;
+		#print "<li>";
+		print "    <li><a href=\"#\"><span>$item->[0]</span></a>"; # top: config, admin
+		print "    <ul>";
+		#print "        <li>";
+		foreach my $i (@$item) {
+			if (ref $i eq 'ARRAY') {
+				foreach my $e (@$i) {
+					#print Dumper $e;
+					print "            <li><a><span>$e->[0]</span></a>"; # group: artist, user
+					print "            <ul>";
+					#print "            <li>";
+					foreach my $w (@$e) {
+						if (ref $w eq 'ARRAY') {
+							foreach my $u (@$w) {
+                                # get URL
+                                my $url = '';
+                                foreach my $entry (@$menu) {
+                                    if ($entry->{menuname} eq $u) {
+                                        $url = "/" . $entry->{controller} . "/" . $entry->{action};
+                                    }
+                                }
+								print "                <li><a href=\"$url\"><span>$u</span></a></li>"; # action: add, browse
+							}
+						}
+					}
+					print "            </ul>";
+					print "        </li>";
+				}
+				print "    </ul>";
+			}
+		}
+		print "    </li>";
+    }
+    print "<li><a href=\"/logout\"><span>Log out</span></a></li>";
+    print "</ul>";
+    
+    
+    
+    
+[% END %]

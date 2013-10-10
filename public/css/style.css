@@ -203,7 +203,8 @@ div#logo {
 div#menu {
     height: 30px;
     border-radius: 5px 5px 0 0;
-    background-color: #F0713A;
+    /*background-color: #F0713A;*/
+    background-color:#4A4235;
 }
 
 div.wrapper {

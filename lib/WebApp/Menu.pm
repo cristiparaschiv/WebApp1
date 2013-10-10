@@ -11,8 +11,8 @@ sub new {
     my $tools = $lib->_get_all();
     
     my $menu = build_tree($tools);
-    
-    return $menu;
+    debug to_dumper $tools;
+    return $tools;
 }
 
 sub build_tree {
@@ -26,6 +26,7 @@ sub build_tree {
         $menu->{$path_parts[0]} = {} if (! exists $menu->{$path_parts[0]});
         $menu->{$path_parts[0]}->{$path_parts[1]} = {} if (! exists $menu->{$path_parts[0]}->{$path_parts[1]});
         $menu->{$path_parts[0]}->{$path_parts[1]}->{$entry->{menuname}} = {
+            order => $entry->{order},
             controller => $entry->{controller},
             action => $entry->{action},
         }
